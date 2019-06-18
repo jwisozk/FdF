@@ -118,7 +118,10 @@ void    ft_open_window(t_point **arr_lst, int len_x, int len_y)
 //    len_y = 1;
 //    arr_lst[0][0].x = 11;
     ft_draw_lines(arr_lst, len_x, len_y, mlx_ptr, win_ptr);
-//    ft_bresenham(100, 100, 300, 300, mlx_ptr, win_ptr, 0xFFFFFF);
+    ft_bresenham_hor(100, 118, 136, 100, mlx_ptr, win_ptr, 0xFFFFFF);
+    ft_bresenham_hor(100, 118, 136, 136, mlx_ptr, win_ptr, 0xFFFFFF);
+    ft_bresenham_hor(136, 100, 172, 118, mlx_ptr, win_ptr, 0xFFFFFF);
+    ft_bresenham_hor(136, 136, 172, 118, mlx_ptr, win_ptr, 0xFFFFFF);
 //    ft_iso_modifier(mlx_ptr, win_ptr, arr_lst, len_x, len_y);
     mlx_loop(mlx_ptr);
 }

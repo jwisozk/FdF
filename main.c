@@ -120,20 +120,23 @@ void ft_add_coords(t_point **arr_lst, int len_x, int len_y)
     int     i;
     int     j;
     int     d;
+    int     s;
 
     d = (len_x > len_y) ? DH / len_x : DH / len_y;
 //    printf("dx : %f, dy : %f\n", dx , dy);
     i = 0;
+    s = 0;
     while (i < len_y)
     {
         j = 0;
         while (j < len_x)
         {
-            arr_lst[i][j].x = (j == 0) ? 100 + (DW - d * len_x) / 2 : arr_lst[i][j - 1].x + d;
-            arr_lst[i][j].y = (i == 0) ? 100 + (DH - d * len_y) / 2 : arr_lst[i - 1][j].y + d;
+            arr_lst[i][j].x = (j == 0) ? 100 + (DW - d * len_x) / 4  + s : arr_lst[i][j - 1].x + d ;
+            arr_lst[i][j].y = (j == 0) ? (100 + (DH - d * len_y) / 4) + (d * len_x / 2) + s / 2 : arr_lst[i][j - 1].y - d / 2;
           printf("(%i, %i) ", arr_lst[i][j].x, arr_lst[i][j].y);
           j++;
         }
+        s += d;
         printf("\n");
         i++;
     }
@@ -160,6 +163,14 @@ int	main(int argc, char **argv)
         }
         len_y = (int)lst->content_size;
         ft_add_coords(arr_lst, len_x, len_y);
+
+        printf("cos(0,523599) = %f, sin(0,523599) = %f\n", cos(0.523599), sin(0.523599));
+
+        // x' = x * cos() - y * sin()
+        // y' = x * sin() + y * cos()
+
+        printf("x = %f, y = %f\n", 1 * cos(0.523599) - 1 * sin(0.523599), 1 * sin(0.523599) + 1 * cos(0.523599));
+
         ft_open_window(arr_lst, len_x, len_y);
 //        printf("len_x = %i, len_y = %i\n", len_x, len_y);
         ///
