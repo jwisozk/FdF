@@ -121,9 +121,11 @@ void ft_add_coords(t_point **arr_lst, int len_x, int len_y)
     int     j;
     int     d;
     int     s;
+//    float   width = DW;
 
-    d = (len_x > len_y) ? DH / len_x : DH / len_y;
-//    printf("dx : %f, dy : %f\n", dx , dy);
+    d = 30;
+//    d = (len_x > len_y) ? DW / len_x : DH / len_y;
+    printf("d = %i, len_x : %i, len_y : %i\n", d, len_x , len_y);
     i = 0;
     s = 0;
     while (i < len_y)
@@ -131,8 +133,13 @@ void ft_add_coords(t_point **arr_lst, int len_x, int len_y)
         j = 0;
         while (j < len_x)
         {
-            arr_lst[i][j].x = (j == 0) ? 100 + (DW - d * len_x) / 4  + s : arr_lst[i][j - 1].x + d ;
-            arr_lst[i][j].y = (j == 0) ? (100 + (DH - d * len_y) / 4) + (d * len_x / 2) + s / 2 : arr_lst[i][j - 1].y - d / 2;
+            arr_lst[i][j].x = (j == 0) ? DW - d * (len_x + len_y) + s : arr_lst[i][j - 1].x + d ;
+            arr_lst[i][j].y = (j == 0) ? 300 + d * len_x / 2 + s / 2 : arr_lst[i][j - 1].y - d / 2;
+            if (j > 0 && arr_lst[i][j].z > 0 && arr_lst[i][j - 1].z == 0)
+                arr_lst[i][j].y -= arr_lst[i][j].z * d;
+            else if (j > 0 && arr_lst[i][j - 1].z -  arr_lst[i][j].z > 0)
+                arr_lst[i][j].y += arr_lst[i][j - 1].z * d;
+
           printf("(%i, %i) ", arr_lst[i][j].x, arr_lst[i][j].y);
           j++;
         }
