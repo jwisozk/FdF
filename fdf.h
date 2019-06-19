@@ -20,8 +20,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include "libft/libft.h"
-#define DW 1800
-#define DH 900
+#define DW 1400
+#define DH 700
 typedef struct 		s_point
 {
     int             x;

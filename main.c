@@ -66,8 +66,8 @@ static int		ft_print_error(char *str)
 void ft_fill_lst(t_point **arr_lst, int j, int i, char **arr_str)
 {
     char	*color_str;
-    arr_lst[i][j].x = j;
-    arr_lst[i][j].y = i;
+//    arr_lst[i][j].x = 0;
+//    arr_lst[i][j].y = 0;
     arr_lst[i][j].z = ft_atoi(arr_str[j]);
     if (!(color_str = ft_strchr(arr_str[j], ',')))
         arr_lst[i][j].color = 0;
@@ -115,38 +115,39 @@ t_point	**ft_create_arr_lst(t_list *lst, int *len_x)
     return (arr_lst);
 }
 
-void ft_add_coords(t_point **arr_lst, int len_x, int len_y)
+t_point	*ft_add_coords(t_point **arr_lst, int len_x, int len_y)
 {
     int     i;
     int     j;
     int     d;
-    int     s;
-//    float   width = DW;
+    t_point	*arr;
+    int len;
 
-    d = 30;
-//    d = (len_x > len_y) ? DW / len_x : DH / len_y;
-    printf("d = %i, len_x : %i, len_y : %i\n", d, len_x , len_y);
+    len = len_x * len_y;
+    arr = (t_point *)malloc(sizeof(t_point) * len);
+
+//    d = (len_x > len_y) ? DH / len_x : DH / len_y;
+    d = 1;
+//    printf("dx : %f, dy : %f\n", dx , dy);
     i = 0;
-    s = 0;
     while (i < len_y)
     {
         j = 0;
         while (j < len_x)
         {
-            arr_lst[i][j].x = (j == 0) ? DW - d * (len_x + len_y) + s : arr_lst[i][j - 1].x + d ;
-            arr_lst[i][j].y = (j == 0) ? 300 + d * len_x / 2 + s / 2 : arr_lst[i][j - 1].y - d / 2;
-            if (j > 0 && arr_lst[i][j].z > 0 && arr_lst[i][j - 1].z == 0)
-                arr_lst[i][j].y -= arr_lst[i][j].z * d;
-            else if (j > 0 && arr_lst[i][j - 1].z -  arr_lst[i][j].z > 0)
-                arr_lst[i][j].y += arr_lst[i][j - 1].z * d;
-
-          printf("(%i, %i) ", arr_lst[i][j].x, arr_lst[i][j].y);
+            arr_lst[i][j].x = (j == 0) ? 0 : arr_lst[i][j - 1].x + d;
+            arr_lst[i][j].y = (i == 0) ? 0 : arr_lst[i - 1][j].y + d;
+            arr->x = arr_lst[i][j].x;
+            arr->y = arr_lst[i][j].y;
+            arr->z = arr_lst[i][j].z;
+//          printf("(%i, %i) ", arr_lst[i][j].x, arr_lst[i][j].y);
+          arr++;
           j++;
         }
-        s += d;
         printf("\n");
         i++;
     }
+    return (arr - len);
 }
 
 int	main(int argc, char **argv)
@@ -156,6 +157,7 @@ int	main(int argc, char **argv)
     int     len_y;
     t_list	*lst;
     t_point	**arr_lst;
+    t_point	*arr;
 
     if (argc == 2)
     {
@@ -169,15 +171,19 @@ int	main(int argc, char **argv)
             return (ft_print_error("error"));
         }
         len_y = (int)lst->content_size;
-        ft_add_coords(arr_lst, len_x, len_y);
+        arr = ft_add_coords(arr_lst, len_x, len_y);
 
-        printf("cos(0,523599) = %f, sin(0,523599) = %f\n", cos(0.523599), sin(0.523599));
 
-        // x' = x * cos() - y * sin()
-        // y' = x * sin() + y * cos()
-
-        printf("x = %f, y = %f\n", 1 * cos(0.523599) - 1 * sin(0.523599), 1 * sin(0.523599) + 1 * cos(0.523599));
-
+//        int i;
+//        i = 0;
+//        while (i <= len_x * len_y)
+//        {
+//            if (i % len_x == 0)
+//                printf("\n");
+//            printf("(%i, %i) ", arr->x, arr->y);
+//            i++;
+//            arr++;
+//        }
         ft_open_window(arr_lst, len_x, len_y);
 //        printf("len_x = %i, len_y = %i\n", len_x, len_y);
         ///
