@@ -22,6 +22,14 @@
 #include "libft/libft.h"
 #define DW 1400
 #define DH 700
+#define ONE_DEGREE M_PI / 180
+
+typedef  struct     s_angle
+{
+    float           x;
+    float           y;
+    float           z;
+}                   t_angle;
 typedef struct 		s_point
 {
     int             x;

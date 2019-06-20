@@ -24,7 +24,7 @@ void ft_bresenham_hor(int x1, int y1, int x2, int y2, void *mlx_ptr, void *win_p
     while (x <= x2)
     {
         mlx_pixel_put(mlx_ptr, win_ptr, x, y, color);
-        if (slope >= 0)
+        if (slope > 0)
         {
             y = y + yi;
             slope -= 2 * dx;
@@ -57,7 +57,7 @@ void ft_bresenham_ver(int x1, int y1, int x2, int y2, void *mlx_ptr, void *win_p
     while (y <= y2)
     {
         mlx_pixel_put(mlx_ptr, win_ptr, x, y, color);
-        if (slope >= 0)
+        if (slope > 0)
         {
             x = x + xi;
             slope -= 2 * dy;
@@ -96,9 +96,9 @@ void    ft_draw_lines(t_point **arr_lst, int len_x, int len_y, void *mlx_ptr, vo
         j = 0;
         while (j < len_x)
         {
-            if (j + 1 < len_x)
+            if (j + 1 < len_x && i != len_y - 1)
                 ft_bresenham(arr_lst[i][j].x, arr_lst[i][j].y, arr_lst[i][j + 1].x, arr_lst[i][j + 1].y, mlx_ptr, win_ptr, 0xFFFFFF);
-            if (i + 1 < len_y)
+            if (i + 1 < len_y && j != 0)
                 ft_bresenham(arr_lst[i][j].x, arr_lst[i][j].y, arr_lst[i + 1][j].x, arr_lst[i + 1][j].y, mlx_ptr, win_ptr, 0xFFFFFF);
             j++;
         }
@@ -106,6 +106,73 @@ void    ft_draw_lines(t_point **arr_lst, int len_x, int len_y, void *mlx_ptr, vo
     }
 }
 
+void	ft_rotate(t_point** arr_lst, t_angle *rad, int len_x, int len_y)
+{
+    int     i;
+    int     j;
+    int     x;
+    int     y;
+    int     z;
+
+    i = 0;
+    while (i < len_y)
+    {
+        j = 0;
+        while (j < len_x)
+        {
+            x = arr_lst[i][j].x;
+            y = arr_lst[i][j].y;
+            z = arr_lst[i][j].z;
+            if (rad->x)
+            {
+                arr_lst[i][j].y = y * cos(rad->x) - z * sin(rad->x);
+                arr_lst[i][j].z = y * sin(rad->x) + z * cos(rad->x);
+            }
+            if (rad->y)
+            {
+                arr_lst[i][j].x = x * cos(rad->y) + z * sin(rad->y);
+                arr_lst[i][j].z = z * cos(rad->y) - x * sin(rad->y);
+            }
+            if (rad->z)
+            {
+                arr_lst[i][j].x = x * cos(rad->z) - y * sin(rad->z);
+                arr_lst[i][j].y = x * sin(rad->z) + y * cos(rad->z);
+            }
+            j++;
+        }
+        i++;
+    }
+}
+
+t_angle    *ft_degree_to_rad(int x, int y, int z)
+{
+    t_angle *rad;
+
+    rad = (t_angle*)malloc(sizeof(t_angle));
+    rad->x = x * ONE_DEGREE;
+    rad->y = y * ONE_DEGREE;
+    rad->z = z * ONE_DEGREE;
+    return (rad);
+}
+
+void ft_moving(t_point **arr_lst, int len_x, int len_y, int offset)
+{
+    int     i;
+    int     j;
+
+    i = 0;
+    while (i < len_y)
+    {
+        j = 0;
+        while (j < len_x)
+        {
+            arr_lst[i][j].x += offset;
+            arr_lst[i][j].y += offset;
+            j++;
+        }
+        i++;
+    }
+}
 
 void    ft_open_window(t_point **arr_lst, int len_x, int len_y)
 {
@@ -117,6 +184,11 @@ void    ft_open_window(t_point **arr_lst, int len_x, int len_y)
 //    len_x = 1;
 //    len_y = 1;
 //    arr_lst[0][0].x = 11;
+
+
+    ft_rotate(arr_lst, ft_degree_to_rad(0, 0, -45), len_x, len_y);
+    ft_rotate(arr_lst, ft_degree_to_rad(60, 0, 0), len_x, len_y);
+    ft_moving(arr_lst, len_x, len_y, 500);
     ft_draw_lines(arr_lst, len_x, len_y, mlx_ptr, win_ptr);
 //    ft_bresenham(100, 100, 300, 300, mlx_ptr, win_ptr, 0xFFFFFF);
 //    ft_iso_modifier(mlx_ptr, win_ptr, arr_lst, len_x, len_y);

@@ -127,7 +127,7 @@ t_point	*ft_add_coords(t_point **arr_lst, int len_x, int len_y)
     arr = (t_point *)malloc(sizeof(t_point) * len);
 
 //    d = (len_x > len_y) ? DH / len_x : DH / len_y;
-    d = 1;
+        d = 30;
 //    printf("dx : %f, dy : %f\n", dx , dy);
     i = 0;
     while (i < len_y)
@@ -137,6 +137,7 @@ t_point	*ft_add_coords(t_point **arr_lst, int len_x, int len_y)
         {
             arr_lst[i][j].x = (j == 0) ? 0 : arr_lst[i][j - 1].x + d;
             arr_lst[i][j].y = (i == 0) ? 0 : arr_lst[i - 1][j].y + d;
+            arr_lst[i][j].z *= d;
             arr->x = arr_lst[i][j].x;
             arr->y = arr_lst[i][j].y;
             arr->z = arr_lst[i][j].z;

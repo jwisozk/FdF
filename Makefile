@@ -13,7 +13,7 @@
 NAME = fdf
 CC = clang
 CFLAGS = -Wall -Wextra -Werror
-HEADERS = fdf.h -I /usr/local/include
+HEADERS = fdf.h
 # LIBMLX = -L minilibx_macos/ -lmlx -framework OpenGL -framework AppKit
 LIBMLX = -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 LIBFT = libft/libft.a
@@ -29,7 +29,7 @@ $(NAME): $(OBJ)
 	$(CC) $(CFLAGS) $^ $(LIBFT) $(LIBMLX) -o $(NAME)
 
 %.o: %.c $(HEADERS)
-	$(CC) $(CFLAGS) -c $< 
+	$(CC) $(CFLAGS) -c $<
 
 clean:
 	rm -f $(OBJ)
