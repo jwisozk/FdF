@@ -115,34 +115,34 @@ t_point	**ft_create_arr_lst(t_list *lst, int *len_x)
     return (arr_lst);
 }
 
-void ft_add_coords(t_point **arr_lst, int len_x, int len_y)
-{
-    int     i;
-    int     j;
-    int     d;
-    int     len;
-
-    len = len_x * len_y;
-
-//    d = (len_x > len_y) ? DH / len_x : DH / len_y;
-        d = 500 / len_y;
-//    printf("dx : %f, dy : %f\n", dx , dy);
-    i = 0;
-    while (i < len_y)
-    {
-        j = 0;
-        while (j < len_x)
-        {
-            arr_lst[i][j].x = (j == 0) ? DW / 2 - len_x * d / 2 : arr_lst[i][j - 1].x + d;
-            arr_lst[i][j].y = (i == 0) ? DH / 2 - len_y * d / 2 : arr_lst[i - 1][j].y + d;
-            arr_lst[i][j].z *= d;
-//          printf("(%i, %i) ", arr_lst[i][j].x, arr_lst[i][j].y);
-          j++;
-        }
-        printf("\n");
-        i++;
-    }
-}
+//void ft_add_coords(t_point **arr_lst, int len_x, int len_y)
+//{
+//    int     i;
+//    int     j;
+//    int     d;
+//    int     len;
+//
+//    len = len_x * len_y;
+//
+////    d = (len_x > len_y) ? DH / len_x : DH / len_y;
+//        d = 500 / len_y;
+////    printf("dx : %f, dy : %f\n", dx , dy);
+//    i = 0;
+//    while (i < len_y)
+//    {
+//        j = 0;
+//        while (j < len_x)
+//        {
+//            arr_lst[i][j].x = (j == 0) ? DW / 2 - len_x * d / 2 : arr_lst[i][j - 1].x + d;
+//            arr_lst[i][j].y = (i == 0) ? DH / 2 - len_y * d / 2 : arr_lst[i - 1][j].y + d;
+//            arr_lst[i][j].z *= d;
+////          printf("(%i, %i) ", arr_lst[i][j].x, arr_lst[i][j].y);
+//          j++;
+//        }
+//        printf("\n");
+//        i++;
+//    }
+//}
 
 int	main(int argc, char **argv)
 {
@@ -164,7 +164,7 @@ int	main(int argc, char **argv)
             return (ft_print_error("error"));
         }
         len_y = (int)lst->content_size;
-        ft_add_coords(arr_lst, len_x, len_y);
+//        ft_add_coords(arr_lst, len_x, len_y);
 
 
 //        int i;

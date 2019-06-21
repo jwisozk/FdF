@@ -173,6 +173,53 @@ void ft_moving(t_point **arr_lst, int len_x, int len_y, int offset)
     }
 }
 
+void ft_print(t_point **arr_lst, int len_x, int len_y)
+{
+    int     i;
+    int     j;
+
+    i = 0;
+    while (i < len_y)
+    {
+        j = 0;
+        while (j < len_x)
+        {
+            printf("(%i, %i) ", arr_lst[i][j].x, arr_lst[i][j].y);
+            j++;
+        }
+        printf("\n");
+        i++;
+    }
+    printf("\n- - - - - - - - - - - - - - - - - - - - - -\n");
+
+}
+
+void ft_add_coords(t_point **arr_lst, int len_x, int len_y)
+{
+    int     i;
+    int     j;
+    int     d;
+    int     len;
+
+    len = len_x * len_y;
+    d = 500 / len_y;
+    i = 0;
+    while (i < len_y)
+    {
+        j = 0;
+        while (j < len_x)
+        {
+            arr_lst[i][j].x = (j == 0) ? DW / 2 - len_x * d / 2 : arr_lst[i][j - 1].x + d;
+            arr_lst[i][j].y = (i == 0) ? DH / 2 - len_y * d / 2 : arr_lst[i - 1][j].y + d;
+            arr_lst[i][j].z *= d;
+//
+            j++;
+        }
+        printf("\n");
+        i++;
+    }
+}
+
 int ft_close_window(void)
 {
     exit(0);
@@ -184,15 +231,38 @@ int key_press(int keycode, void *param)
 
     p = (t_param*)param;
 
-    if (keycode == 12)
-        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
+    mlx_clear_window(p->mlx_ptr, p->win_ptr);
     if (keycode == 53)
         ft_close_window();
+
+//    if (keycode == 12)
+//        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
+
+    if (keycode == 0)
+    {
+        ft_rotate(p->arr_lst, ft_degree_to_rad(0, 0, -1), p->len_x, p->len_y);
+        //ft_add_coords(p->arr_lst, p->len_x, p->len_y);
+        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
+        ft_print(p->arr_lst, p->len_x, p->len_y);
+    }
+    if (keycode == 2)
+    {
+        ft_rotate(p->arr_lst, ft_degree_to_rad(0, 0, 1), p->len_x, p->len_y);
+        //   ft_add_coords(p->arr_lst, p->len_x, p->len_y);
+        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
+        ft_print(p->arr_lst, p->len_x, p->len_y);
+    }
+    if (keycode == 12)
+    {
+        ft_add_coords(p->arr_lst, p->len_x, p->len_y);
+        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
+        ft_print(p->arr_lst, p->len_x, p->len_y);
+    }
     if (keycode == 18)
     {
         ft_rotate(p->arr_lst, ft_degree_to_rad(0, 0, -45), p->len_x, p->len_y);
         ft_rotate(p->arr_lst, ft_degree_to_rad(60, 0, 0), p->len_x, p->len_y);
-  //      ft_moving(p->arr_lst, p->len_x, p->len_y, 500);
+        ft_moving(p->arr_lst, p->len_x, p->len_y, 500);
         ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
     }
     return (0);
@@ -209,7 +279,7 @@ void    ft_open_window(t_point **arr_lst, int len_x, int len_y)
 //    len_x = 1;
 //    len_y = 1;
 //    arr_lst[0][0].x = 11;
-
+    ft_add_coords(arr_lst, len_x, len_y);
     p.arr_lst = arr_lst;
     p.len_x = len_x;
     p.len_y = len_y;
