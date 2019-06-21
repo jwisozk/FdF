@@ -96,9 +96,9 @@ void    ft_draw_lines(t_point **arr_lst, int len_x, int len_y, void *mlx_ptr, vo
         j = 0;
         while (j < len_x)
         {
-            if (j + 1 < len_x && i != len_y - 1)
+            if (j + 1 < len_x)
                 ft_bresenham(arr_lst[i][j].x, arr_lst[i][j].y, arr_lst[i][j + 1].x, arr_lst[i][j + 1].y, mlx_ptr, win_ptr, 0xFFFFFF);
-            if (i + 1 < len_y && j != 0)
+            if (i + 1 < len_y)
                 ft_bresenham(arr_lst[i][j].x, arr_lst[i][j].y, arr_lst[i + 1][j].x, arr_lst[i + 1][j].y, mlx_ptr, win_ptr, 0xFFFFFF);
             j++;
         }
@@ -125,18 +125,18 @@ void	ft_rotate(t_point** arr_lst, t_angle *rad, int len_x, int len_y)
             z = arr_lst[i][j].z;
             if (rad->x)
             {
-                arr_lst[i][j].y = y * cos(rad->x) - z * sin(rad->x);
-                arr_lst[i][j].z = y * sin(rad->x) + z * cos(rad->x);
+                arr_lst[i][j].y = y * COS(rad->x) - z * SIN(rad->x);
+                arr_lst[i][j].z = y * SIN(rad->x) + z * COS(rad->x);
             }
             if (rad->y)
             {
-                arr_lst[i][j].x = x * cos(rad->y) + z * sin(rad->y);
-                arr_lst[i][j].z = z * cos(rad->y) - x * sin(rad->y);
+                arr_lst[i][j].x = x * COS(rad->y) + z * SIN(rad->y);
+                arr_lst[i][j].z = z * COS(rad->y) - x * SIN(rad->y);
             }
             if (rad->z)
             {
-                arr_lst[i][j].x = x * cos(rad->z) - y * sin(rad->z);
-                arr_lst[i][j].y = x * sin(rad->z) + y * cos(rad->z);
+                arr_lst[i][j].x = x * COS(rad->z) - y * SIN(rad->z);
+                arr_lst[i][j].y = x * SIN(rad->z) + y * COS(rad->z);
             }
             j++;
         }
@@ -149,9 +149,9 @@ t_angle    *ft_degree_to_rad(int x, int y, int z)
     t_angle *rad;
 
     rad = (t_angle*)malloc(sizeof(t_angle));
-    rad->x = x * ONE_DEGREE;
-    rad->y = y * ONE_DEGREE;
-    rad->z = z * ONE_DEGREE;
+    rad->x = x;
+    rad->y = y;
+    rad->z = z;
     return (rad);
 }
 
@@ -186,9 +186,9 @@ void    ft_open_window(t_point **arr_lst, int len_x, int len_y)
 //    arr_lst[0][0].x = 11;
 
 
-    ft_rotate(arr_lst, ft_degree_to_rad(0, 0, -45), len_x, len_y);
-    ft_rotate(arr_lst, ft_degree_to_rad(60, 0, 0), len_x, len_y);
-    ft_moving(arr_lst, len_x, len_y, 500);
+ //   ft_rotate(arr_lst, ft_degree_to_rad(0, 0, -45), len_x, len_y);
+  //  ft_rotate(arr_lst, ft_degree_to_rad(60, 0, 0), len_x, len_y);
+  //  ft_moving(arr_lst, len_x, len_y, 500);
     ft_draw_lines(arr_lst, len_x, len_y, mlx_ptr, win_ptr);
 //    ft_bresenham(100, 100, 300, 300, mlx_ptr, win_ptr, 0xFFFFFF);
 //    ft_iso_modifier(mlx_ptr, win_ptr, arr_lst, len_x, len_y);

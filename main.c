@@ -135,8 +135,8 @@ t_point	*ft_add_coords(t_point **arr_lst, int len_x, int len_y)
         j = 0;
         while (j < len_x)
         {
-            arr_lst[i][j].x = (j == 0) ? 0 : arr_lst[i][j - 1].x + d;
-            arr_lst[i][j].y = (i == 0) ? 0 : arr_lst[i - 1][j].y + d;
+            arr_lst[i][j].x = (j == 0) ? DW / 2 - len_x * d / 2 : arr_lst[i][j - 1].x + d;
+            arr_lst[i][j].y = (i == 0) ? DH / 2 - len_y * d / 2 : arr_lst[i - 1][j].y + d;
             arr_lst[i][j].z *= d;
             arr->x = arr_lst[i][j].x;
             arr->y = arr_lst[i][j].y;

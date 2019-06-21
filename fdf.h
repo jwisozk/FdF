@@ -20,9 +20,11 @@
 #include <stdlib.h>
 #include <math.h>
 #include "libft/libft.h"
-#define DW 1400
-#define DH 700
-#define ONE_DEGREE M_PI / 180
+#define DW 1600
+#define DH 900
+//#define ONE_DEGREE M_PI / 180
+#define COS(x) cos(x * M_PI / 180)
+#define SIN(x) sin(x * M_PI / 180)
 
 typedef  struct     s_angle
 {

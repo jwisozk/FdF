@@ -11,14 +11,37 @@
   <component name="ChangeListManager">
     <list default="true" id="06dc698a-86e5-45f5-9717-803966502806" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/algo.c" beforeDir="false" afterPath="$PROJECT_DIR$/algo.c" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/algo.o" beforeDir="false" afterPath="$PROJECT_DIR$/algo.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fdf" beforeDir="false" afterPath="$PROJECT_DIR$/fdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fdf.h" beforeDir="false" afterPath="$PROJECT_DIR$/fdf.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libft/libft.a" beforeDir="false" afterPath="$PROJECT_DIR$/libft/libft.a" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.o" beforeDir="false" afterPath="$PROJECT_DIR$/main.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/maps/1.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/maps/2.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/maps/42.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/maps/elem-col.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/maps/elem-fract.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/maps/elem.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/maps/elem2.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/maps/julia.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/maps/mars.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/maps/t1.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/maps/t2.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_maps/10-2.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_maps/10-70.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_maps/100-6.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_maps/20-60.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_maps/42.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_maps/50-4.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_maps/basictest.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_maps/elem.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_maps/mars.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_maps/pentenegpos.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_maps/plat.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_maps/pnp_flat.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_maps/pylone.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_maps/pyra.fdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test_maps/pyramide.fdf" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,8 +57,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/algo.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="4" selection-start-line="4" selection-end-line="5" />
+            <state relative-caret-position="-11">
+              <caret line="167" column="9" selection-start-line="167" selection-start-column="9" selection-end-line="167" selection-end-column="9" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -44,19 +67,19 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main.c">
+        <entry file="file://$PROJECT_DIR$/fdf.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-213">
-              <caret line="129" selection-start-line="129" selection-end-line="130" />
+            <state relative-caret-position="119">
+              <caret line="25" column="28" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/fdf.h">
+        <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="68">
-              <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="8" />
+            <state relative-caret-position="15">
+              <caret line="136" selection-start-line="136" selection-end-line="137" />
             </state>
           </provider>
         </entry>
@@ -64,7 +87,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Makefile">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
+            <state relative-caret-position="465">
               <caret line="31" column="25" selection-start-line="31" selection-start-column="25" selection-end-line="31" selection-end-column="25" />
             </state>
           </provider>
@@ -78,10 +101,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/fdf.h" />
         <option value="$PROJECT_DIR$/Makefile" />
-        <option value="$PROJECT_DIR$/main.c" />
+        <option value="$PROJECT_DIR$/fdf.h" />
         <option value="$PROJECT_DIR$/algo.c" />
+        <option value="$PROJECT_DIR$/main.c" />
       </list>
     </option>
   </component>
@@ -95,17 +118,16 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="631" />
-    <option name="y" value="23" />
-    <option name="width" value="1148" />
-    <option name="height" value="797" />
+  <component name="ProjectFrameBounds" fullScreen="true">
+    <option name="width" value="1600" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -117,7 +139,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -152,17 +173,18 @@
       <workItem from="1559579120310" duration="1517000" />
       <workItem from="1559584348409" duration="2578000" />
       <workItem from="1560852380367" duration="19252000" />
-      <workItem from="1561027432187" duration="6278000" />
+      <workItem from="1561027432187" duration="7046000" />
+      <workItem from="1561109947431" duration="2228000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="30385000" />
+    <option name="totallyTimeSpent" value="33381000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="631" y="23" width="1148" height="797" extended-state="0" />
+    <frame x="0" y="0" width="1600" height="900" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18896925" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13607189" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -174,7 +196,7 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
       <window_info anchor="bottom" id="Version Control" order="8" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.32056737" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" visible="true" weight="0.27228916" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -193,29 +215,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Makefile">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
+        <state relative-caret-position="465">
           <caret line="31" column="25" selection-start-line="31" selection-start-column="25" selection-end-line="31" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/fdf.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="28" column="5" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="8" />
+        <state relative-caret-position="119">
+          <caret line="25" column="28" selection-start-line="25" selection-start-column="28" selection-end-line="25" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-213">
-          <caret line="129" selection-start-line="129" selection-end-line="130" />
+        <state relative-caret-position="15">
+          <caret line="136" selection-start-line="136" selection-end-line="137" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/algo.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="4" selection-start-line="4" selection-end-line="5" />
+        <state relative-caret-position="-11">
+          <caret line="167" column="9" selection-start-line="167" selection-start-column="9" selection-end-line="167" selection-end-column="9" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
