@@ -1,4 +1,3 @@
-#include "mlx.h"
 #include "fdf.h"
 
 void ft_bresenham_hor(int x1, int y1, int x2, int y2, void *mlx_ptr, void *win_ptr, int color)

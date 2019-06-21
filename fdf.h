@@ -6,7 +6,7 @@
 /*   By: jwisozk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/05/28 18:39:19 by jwisozk           #+#    #+#             */
-/*   Updated: 2019/05/29 16:52:25 by twill            ###   ########.fr       */
+/*   Updated: 2019/06/21 14:01:44 by twill            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "libft/libft.h"
+#include "mlx.h"
 #define DW 1600
 #define DH 900
 //#define ONE_DEGREE M_PI / 180
