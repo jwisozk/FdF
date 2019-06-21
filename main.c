@@ -115,16 +115,14 @@ t_point	**ft_create_arr_lst(t_list *lst, int *len_x)
     return (arr_lst);
 }
 
-t_point	*ft_add_coords(t_point **arr_lst, int len_x, int len_y)
+void ft_add_coords(t_point **arr_lst, int len_x, int len_y)
 {
     int     i;
     int     j;
     int     d;
-    t_point	*arr;
-    int len;
+    int     len;
 
     len = len_x * len_y;
-    arr = (t_point *)malloc(sizeof(t_point) * len);
 
 //    d = (len_x > len_y) ? DH / len_x : DH / len_y;
         d = 30;
@@ -138,17 +136,12 @@ t_point	*ft_add_coords(t_point **arr_lst, int len_x, int len_y)
             arr_lst[i][j].x = (j == 0) ? DW / 2 - len_x * d / 2 : arr_lst[i][j - 1].x + d;
             arr_lst[i][j].y = (i == 0) ? DH / 2 - len_y * d / 2 : arr_lst[i - 1][j].y + d;
             arr_lst[i][j].z *= d;
-            arr->x = arr_lst[i][j].x;
-            arr->y = arr_lst[i][j].y;
-            arr->z = arr_lst[i][j].z;
 //          printf("(%i, %i) ", arr_lst[i][j].x, arr_lst[i][j].y);
-          arr++;
           j++;
         }
         printf("\n");
         i++;
     }
-    return (arr - len);
 }
 
 int	main(int argc, char **argv)
@@ -158,7 +151,6 @@ int	main(int argc, char **argv)
     int     len_y;
     t_list	*lst;
     t_point	**arr_lst;
-    t_point	*arr;
 
     if (argc == 2)
     {
@@ -172,7 +164,7 @@ int	main(int argc, char **argv)
             return (ft_print_error("error"));
         }
         len_y = (int)lst->content_size;
-        arr = ft_add_coords(arr_lst, len_x, len_y);
+        ft_add_coords(arr_lst, len_x, len_y);
 
 
 //        int i;
