@@ -41,6 +41,15 @@ typedef struct 		s_point
 	int				color;
 }					t_point;
 
+typedef  struct     s_param
+{
+    t_point         **arr_lst;
+    int             len_x;
+    int             len_y;
+    void	        *mlx_ptr;
+    void	        *win_ptr;
+}                   t_param;
+
 void	draw_line(void *mlx_ptr, void *win_ptr, float x1, float y1,
 		float x2, float y2,	int color);
 void    ft_wire_designer(void *mlx_ptr, void *win_ptr,

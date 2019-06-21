@@ -173,10 +173,36 @@ void ft_moving(t_point **arr_lst, int len_x, int len_y, int offset)
     }
 }
 
+int ft_close_window(void)
+{
+    exit(0);
+}
+
+int key_press(int keycode, void *param)
+{
+    t_param *p;
+
+    p = (t_param*)param;
+
+    if (keycode == 12)
+        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
+    if (keycode == 53)
+        ft_close_window();
+    if (keycode == 18)
+    {
+        ft_rotate(p->arr_lst, ft_degree_to_rad(0, 0, -45), p->len_x, p->len_y);
+        ft_rotate(p->arr_lst, ft_degree_to_rad(60, 0, 0), p->len_x, p->len_y);
+  //      ft_moving(p->arr_lst, p->len_x, p->len_y, 500);
+        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
+    }
+    return (0);
+}
+
 void    ft_open_window(t_point **arr_lst, int len_x, int len_y)
 {
     void	*mlx_ptr;
     void	*win_ptr;
+    t_param p;
 
     mlx_ptr = mlx_init();
     win_ptr = mlx_new_window(mlx_ptr, 1600, 900, "80s_team");
@@ -184,11 +210,17 @@ void    ft_open_window(t_point **arr_lst, int len_x, int len_y)
 //    len_y = 1;
 //    arr_lst[0][0].x = 11;
 
-
+    p.arr_lst = arr_lst;
+    p.len_x = len_x;
+    p.len_y = len_y;
+    p.mlx_ptr = mlx_ptr;
+    p.win_ptr = win_ptr;
  //   ft_rotate(arr_lst, ft_degree_to_rad(0, 0, -45), len_x, len_y);
   //  ft_rotate(arr_lst, ft_degree_to_rad(60, 0, 0), len_x, len_y);
   //  ft_moving(arr_lst, len_x, len_y, 500);
-    ft_draw_lines(arr_lst, len_x, len_y, mlx_ptr, win_ptr);
+
+    mlx_hook(win_ptr, 17, 0, ft_close_window, 0);
+    mlx_hook(win_ptr, 2, 0, key_press, &p);
 //    ft_bresenham(100, 100, 300, 300, mlx_ptr, win_ptr, 0xFFFFFF);
 //    ft_iso_modifier(mlx_ptr, win_ptr, arr_lst, len_x, len_y);
     mlx_loop(mlx_ptr);

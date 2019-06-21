@@ -125,7 +125,7 @@ void ft_add_coords(t_point **arr_lst, int len_x, int len_y)
     len = len_x * len_y;
 
 //    d = (len_x > len_y) ? DH / len_x : DH / len_y;
-        d = 30;
+        d = 500 / len_y;
 //    printf("dx : %f, dy : %f\n", dx , dy);
     i = 0;
     while (i < len_y)
