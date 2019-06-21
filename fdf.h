@@ -29,15 +29,21 @@
 
 typedef  struct     s_angle
 {
-    float           x;
-    float           y;
-    float           z;
+    int             x;
+    int             y;
+    int             z;
 }                   t_angle;
 typedef struct 		s_point
 {
+    int             ax;
+    int             ay;
+    int             az;
+    int             dx;
+    int             dy;
+    int             dz;
     int             x;
-	int 	        y;
-	int				z;
+    int 	        y;
+    int	            z;
 	int				color;
 }					t_point;
 
