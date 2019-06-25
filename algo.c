@@ -96,9 +96,9 @@ void    ft_draw_lines(t_point **arr_lst, int len_x, int len_y, void *mlx_ptr, vo
         while (j < len_x)
         {
             if (j + 1 < len_x)
-                ft_bresenham(arr_lst[i][j].dx, arr_lst[i][j].dy, arr_lst[i][j + 1].dx, arr_lst[i][j + 1].dy, mlx_ptr, win_ptr, 0xFFFFFF);
+                ft_bresenham(arr_lst[i][j].x + DW / 2, arr_lst[i][j].y + DH / 2, arr_lst[i][j + 1].x + DW / 2, arr_lst[i][j + 1].y + DH / 2, mlx_ptr, win_ptr, 0xFFFFFF);
             if (i + 1 < len_y)
-                ft_bresenham(arr_lst[i][j].dx, arr_lst[i][j].dy, arr_lst[i + 1][j].dx, arr_lst[i + 1][j].dy, mlx_ptr, win_ptr, 0xFFFFFF);
+                ft_bresenham(arr_lst[i][j].x + DW / 2, arr_lst[i][j].y + DH / 2, arr_lst[i + 1][j].x + DW / 2, arr_lst[i + 1][j].y + DH / 2, mlx_ptr, win_ptr, 0xFFFFFF);
             j++;
         }
         i++;
@@ -109,12 +109,12 @@ void	ft_rotate(t_point** arr_lst, t_angle *rad, int len_x, int len_y)
 {
     int     i;
     int     j;
-    int     x;
-    int     y;
-    int     z;
-    int     dx;
-    int     dy;
-    int     dz;
+    float     x;
+    float     y;
+    float     z;
+//    int     dx;
+//    int     dy;
+//    int     dz;
 
     i = 0;
     while (i < len_y)
@@ -122,60 +122,26 @@ void	ft_rotate(t_point** arr_lst, t_angle *rad, int len_x, int len_y)
         j = 0;
         while (j < len_x)
         {
-            dx = arr_lst[i][j].dx;
-            dy = arr_lst[i][j].dy;
-            dz = arr_lst[i][j].dz;
+//            dx = arr_lst[i][j].dx;
+//            dy = arr_lst[i][j].dy;
+//            dz = arr_lst[i][j].dz;
             x = arr_lst[i][j].x;
             y = arr_lst[i][j].y;
             z = arr_lst[i][j].z;
             if (rad->x)
             {
-                if (dx && dy)
-                {
-                    arr_lst[i][j].dx = dx * COS(1 * (arr_lst[i][j].az + rad->z)) - dy * SIN(1 * (arr_lst[i][j].az + rad->z));
-                    arr_lst[i][j].dy = dx * SIN(1 * (arr_lst[i][j].az + rad->z)) + dy * COS(1 * (arr_lst[i][j].az + rad->z));
-                    arr_lst[i][j].dy = dy * COS(1 * (arr_lst[i][j].ax + rad->x)) - dz * SIN(1 * (arr_lst[i][j].ax + rad->x));
-                    arr_lst[i][j].dz = dy * SIN(1 * (arr_lst[i][j].ax + rad->x)) + dz * COS(1 * (arr_lst[i][j].ax + rad->x));
-                }
-                else
-                {
-                    //                arr_lst[i][j].dy = y * COS(1 * (arr_lst[i][j].ax + rad->x)) - z * SIN(1 * (arr_lst[i][j].ax + rad->x)) + DH / 2;
-//                arr_lst[i][j].dz = y * SIN(1 * (arr_lst[i][j].ax + rad->x)) + z * COS(1 * (arr_lst[i][j].ax + rad->x)) + DH / 2;
-                    arr_lst[i][j].dy = y * COS(1 * (arr_lst[i][j].ax + rad->x)) - z * SIN(1 * (arr_lst[i][j].ax + rad->x));
-                    arr_lst[i][j].dz = y * SIN(1 * (arr_lst[i][j].ax + rad->x)) + z * COS(1 * (arr_lst[i][j].ax + rad->x));
-                }
-
-
-
-//
-//                arr_lst[i][j].dx = arr_lst[i][j].dx * COS(1 * (arr_lst[i][j].az + rad->z)) - arr_lst[i][j].dy * SIN(1 * (arr_lst[i][j].az + rad->z));
-//                arr_lst[i][j].dy = y * COS(1 * (arr_lst[i][j].ax + rad->x)) - z * SIN(1 * (arr_lst[i][j].ax + rad->x));
-//                arr_lst[i][j].dz = y * SIN(1 * (arr_lst[i][j].ax + rad->x)) + z * COS(1 * (arr_lst[i][j].ax + rad->x));
-                arr_lst[i][j].ax = (rad->x > 0) ?  arr_lst[i][j].ax + 1 :  arr_lst[i][j].ax - 1;
+                arr_lst[i][j].y = y * COS(rad->x) - z * SIN(rad->x);
+                arr_lst[i][j].z = y * SIN(rad->x) + z * COS(rad->x);
             }
             if (rad->y)
             {
-                arr_lst[i][j].dx = x * COS(rad->y) + z * SIN(rad->y);
-                arr_lst[i][j].dz = z * COS(rad->y) - x * SIN(rad->y);
+                arr_lst[i][j].x = x * COS(rad->y) + z * SIN(rad->y);
+                arr_lst[i][j].z = z * COS(rad->y) - x * SIN(rad->y);
             }
             if (rad->z)
             {
-                if (dy && dz)
-                {
-                    arr_lst[i][j].dy = dy * COS(1 * (arr_lst[i][j].ax + rad->x)) - dz * SIN(1 * (arr_lst[i][j].ax + rad->x));
-                    arr_lst[i][j].dz = dy * SIN(1 * (arr_lst[i][j].ax + rad->x)) + dz * COS(1 * (arr_lst[i][j].ax + rad->x));
-                }
-//                arr_lst[i][j].dx = x * COS(1 * (arr_lst[i][j].az + rad->z)) - y * SIN(1 * (arr_lst[i][j].az + rad->z)) + DW / 2;
-//                arr_lst[i][j].dy = x * SIN(1 * (arr_lst[i][j].az + rad->z)) + y * COS(1 * (arr_lst[i][j].az + rad->z)) + DH / 2;
-                arr_lst[i][j].dx = x * COS(1 * (arr_lst[i][j].az + rad->z)) - y * SIN(1 * (arr_lst[i][j].az + rad->z));
-                arr_lst[i][j].dy = x * SIN(1 * (arr_lst[i][j].az + rad->z)) + y * COS(1 * (arr_lst[i][j].az + rad->z));
-
-
-//                arr_lst[i][j].dy = y * COS(1 * (arr_lst[i][j].ax + rad->x)) - z * SIN(1 * (arr_lst[i][j].ax + rad->x)) + DH / 2;
-//                arr_lst[i][j].dz = arr_lst[i][j].dy * SIN(1 * (arr_lst[i][j].ax + rad->x)) + arr_lst[i][j].dz * COS(1 * (arr_lst[i][j].ax + rad->x));
-//                arr_lst[i][j].dx = x * COS(1 * (arr_lst[i][j].az + rad->z)) - y * SIN(1 * (arr_lst[i][j].az + rad->z));
-//                arr_lst[i][j].dy = x * SIN(1 * (arr_lst[i][j].az + rad->z)) + y * COS(1 * (arr_lst[i][j].az + rad->z));
-                arr_lst[i][j].az = (rad->z > 0) ?  arr_lst[i][j].az + 1 :  arr_lst[i][j].az - 1;
+                arr_lst[i][j].x = x * COS(rad->z) - y * SIN(rad->z);
+                arr_lst[i][j].y = x * SIN(rad->z) + y * COS(rad->z);
             }
             j++;
         }
@@ -224,7 +190,7 @@ void ft_print(t_point **arr_lst, int len_x, int len_y)
         j = 0;
         while (j < len_x)
         {
-            printf("(%i, %i) ", arr_lst[i][j].dx, arr_lst[i][j].dy);
+            printf("(%i, %i) ", (int)arr_lst[i][j].x, (int)arr_lst[i][j].y);
             j++;
         }
         printf("\n");
@@ -234,7 +200,7 @@ void ft_print(t_point **arr_lst, int len_x, int len_y)
 
 }
 
-void ft_add_coords(t_point **arr_lst, int len_x, int len_y)
+void ft_add_coords(t_point **arr_lst, int len_x, int len_y, int event)
 {
     int     i;
     int     j;
@@ -251,13 +217,14 @@ void ft_add_coords(t_point **arr_lst, int len_x, int len_y)
         {
             arr_lst[i][j].x = (j == 0) ? 0 - len_x * d / 2 : arr_lst[i][j - 1].x + d;
             arr_lst[i][j].y = (i == 0) ? 0 - len_y * d / 2: arr_lst[i - 1][j].y + d;
-            arr_lst[i][j].z *= d;
-            arr_lst[i][j].dx = arr_lst[i][j].x + DW / 2;
-            arr_lst[i][j].dy = arr_lst[i][j].y + DH / 2;
-            arr_lst[i][j].dz = arr_lst[i][j].z;
-            arr_lst[i][j].ax = 0;
-            arr_lst[i][j].ay = 0;
-            arr_lst[i][j].az = 0;
+            if (event == 0)
+                arr_lst[i][j].z *= d;
+//            arr_lst[i][j].dx = arr_lst[i][j].x + DW / 2;
+//            arr_lst[i][j].dy = arr_lst[i][j].y + DH / 2;
+//            arr_lst[i][j].dz = arr_lst[i][j].z;
+//            arr_lst[i][j].ax = 0;
+//            arr_lst[i][j].ay = 0;
+//            arr_lst[i][j].az = 0;
             j++;
         }
         i++;
@@ -269,13 +236,13 @@ int ft_close_window(void)
     exit(0);
 }
 
-int key_press(int keycode, void *param)
+int ft_key_press(int keycode, void *param)
 {
     t_param *p;
 
     p = (t_param*)param;
 
-    mlx_clear_window(p->mlx_ptr, p->win_ptr);
+
     if (keycode == 53)
         ft_close_window();
 
@@ -285,6 +252,7 @@ int key_press(int keycode, void *param)
     /* A */
     if (keycode == 0)
     {
+        mlx_clear_window(p->mlx_ptr, p->win_ptr);
         ft_rotate(p->arr_lst, ft_degree_to_rad(0, 0, -1), p->len_x, p->len_y);
         ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
         ft_print(p->arr_lst, p->len_x, p->len_y);
@@ -292,6 +260,7 @@ int key_press(int keycode, void *param)
     /* D */
     if (keycode == 2)
     {
+        mlx_clear_window(p->mlx_ptr, p->win_ptr);
         ft_rotate(p->arr_lst, ft_degree_to_rad(0, 0, 1), p->len_x, p->len_y);
         ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
 //        ft_print(p->arr_lst, p->len_x, p->len_y);
@@ -299,12 +268,14 @@ int key_press(int keycode, void *param)
     /* W */
     if (keycode == 13)
     {
+        mlx_clear_window(p->mlx_ptr, p->win_ptr);
         ft_rotate(p->arr_lst, ft_degree_to_rad(1, 0, 0), p->len_x, p->len_y);
         ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
     }
     /* S */
     if (keycode == 1)
     {
+        mlx_clear_window(p->mlx_ptr, p->win_ptr);
         ft_rotate(p->arr_lst, ft_degree_to_rad(-1, 0, 0), p->len_x, p->len_y);
 //        ft_print(p->arr_lst, p->len_x, p->len_y);
         ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
@@ -313,18 +284,107 @@ int key_press(int keycode, void *param)
     /* Q */
     if (keycode == 12)
     {
-        ft_add_coords(p->arr_lst, p->len_x, p->len_y);
+        mlx_clear_window(p->mlx_ptr, p->win_ptr);
+        ft_add_coords(p->arr_lst, p->len_x, p->len_y, 1);
         ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
 //        ft_print(p->arr_lst, p->len_x, p->len_y);
     }
 
     if (keycode == 18)
     {
+        mlx_clear_window(p->mlx_ptr, p->win_ptr);
+        ft_print(p->arr_lst, p->len_x, p->len_y);
+//        ft_add_coords(p->arr_lst, p->len_x, p->len_y, 1);
+        ft_print(p->arr_lst, p->len_x, p->len_y);
         ft_rotate(p->arr_lst, ft_degree_to_rad(0, 0, -45), p->len_x, p->len_y);
-//        ft_rotate(p->arr_lst, ft_degree_to_rad(60, 0, 0), p->len_x, p->len_y);
+        ft_rotate(p->arr_lst, ft_degree_to_rad(60, 0, 0), p->len_x, p->len_y);
 //        ft_moving(p->arr_lst, p->len_x, p->len_y, 500);
         ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
     }
+    return (0);
+}
+
+int mouse_press(int button, int x, int y, void *param)
+{
+    t_param *p;
+    float q;
+    float w;
+
+    p = (t_param*)param;
+    if (button == 1)
+    {
+        q = (float)x;
+        w = (float)y;
+//        printf("x = %i, y = %i\n", x, y);
+        p->press = 1;
+//        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
+    }
+    return (0);
+
+}
+
+int mouse_release(int button, int x, int y, void *param)
+{
+    t_param *p;
+    float q;
+    float w;
+
+    p = (t_param*)param;
+    mlx_clear_window(p->mlx_ptr, p->win_ptr);
+    if (button == 1)
+    {
+//        button = 1;
+        q = (float)x;
+        w = (float)y;
+//        printf("x = %i, y = %i\n", x, y);
+        p->press = 0;
+        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
+    }
+    return (0);
+}
+
+int mouse_move(int x, int y, void *param)
+{
+    t_param *p;
+
+    p = (t_param*)param;
+
+    if (p->press == 1)
+    {
+        if (p->init_x == 0)
+            p->init_x = x;
+        if (p->init_y == 0)
+            p->init_y = y;
+        if (p->init_y > y)
+        {
+            p->init_y = y;
+            ft_rotate(p->arr_lst, ft_degree_to_rad(1, 0, 0), p->len_x, p->len_y);
+            mlx_clear_window(p->mlx_ptr, p->win_ptr);
+            ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
+        }
+        else if (p->init_y < y)
+        {
+            p->init_y = y;
+            ft_rotate(p->arr_lst, ft_degree_to_rad(-1, 0, 0), p->len_x, p->len_y);
+            mlx_clear_window(p->mlx_ptr, p->win_ptr);
+            ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
+        }
+        if (p->init_x < x)
+        {
+            p->init_x = x;
+            ft_rotate(p->arr_lst, ft_degree_to_rad(0, 1, 0), p->len_x, p->len_y);
+            mlx_clear_window(p->mlx_ptr, p->win_ptr);
+            ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
+        }
+        else if (p->init_x > x)
+        {
+            p->init_x = x;
+            ft_rotate(p->arr_lst, ft_degree_to_rad(0, -1, 0), p->len_x, p->len_y);
+            mlx_clear_window(p->mlx_ptr, p->win_ptr);
+            ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
+        }
+    }
+
     return (0);
 }
 
@@ -341,14 +401,18 @@ void    ft_open_window(t_point **arr_lst, int len_x, int len_y)
 //    len_x = 1;
 //    len_y = 1;
 //    arr_lst[0][0].x = 11;
-    ft_add_coords(arr_lst, len_x, len_y);
-    ft_draw_lines(arr_lst, len_x, len_y, mlx_ptr, win_ptr);
+
     p.arr_lst = arr_lst;
     p.len_x = len_x;
     p.len_y = len_y;
     p.mlx_ptr = mlx_ptr;
     p.win_ptr = win_ptr;
-    printf("d = %i\n", d);
+    p.press = 0;
+    p.init_x = 0;
+    p.init_y = 0;
+    ft_add_coords(arr_lst, len_x, len_y, 0);
+    ft_draw_lines(arr_lst, len_x, len_y, mlx_ptr, win_ptr);
+//    printf("d = %i\n", d);
 //    printf("cx = %i, cy = %i\n", len_x * d / 2, len_y * d / 2);
   //  printf("DW / 2 = %i, DH / 2 = %i\n", DW / 2, DH / 2);
    // printf("x = %i, y = %i\n", len_x * d / 2 - arr_lst[0][0].x + len_x * d / 2, len_y * d / 2 - arr_lst[0][0].y + len_y * d / 2);
@@ -357,7 +421,12 @@ void    ft_open_window(t_point **arr_lst, int len_x, int len_y)
   //  ft_moving(arr_lst, len_x, len_y, 500);
 
     mlx_hook(win_ptr, 17, 0, ft_close_window, 0);
-    mlx_hook(win_ptr, 2, 0, key_press, &p);
+    mlx_hook(win_ptr, 2, 0, ft_key_press, &p);
+    mlx_hook(win_ptr, 4, 0, mouse_press, &p);
+    mlx_hook(win_ptr, 5, 0, mouse_release, &p);
+    mlx_hook(win_ptr, 6, 0, mouse_move, &p);
+//    mlx_mouse_hook(win_ptr, mouse_press, &p);
+//    mlx_mouse_hook(win_ptr, mouse_move, &p);
 //    ft_bresenham(100, 100, 300, 300, mlx_ptr, win_ptr, 0xFFFFFF);
 //    ft_iso_modifier(mlx_ptr, win_ptr, arr_lst, len_x, len_y);
     mlx_loop(mlx_ptr);

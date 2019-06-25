@@ -35,15 +35,15 @@ typedef  struct     s_angle
 }                   t_angle;
 typedef struct 		s_point
 {
-    int             ax;
-    int             ay;
-    int             az;
-    int             dx;
-    int             dy;
-    int             dz;
-    int             x;
-    int 	        y;
-    int	            z;
+//    int             ax;
+//    int             ay;
+//    int             az;
+//    int             dx;
+//    int             dy;
+//    int             dz;
+    float           x;
+    float 	        y;
+    float	        z;
 	int				color;
 }					t_point;
 
@@ -54,6 +54,9 @@ typedef  struct     s_param
     int             len_y;
     void	        *mlx_ptr;
     void	        *win_ptr;
+    int             press;
+    int             init_x;
+    int             init_y;
 }                   t_param;
 
 void	draw_line(void *mlx_ptr, void *win_ptr, float x1, float y1,
