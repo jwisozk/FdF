@@ -190,7 +190,7 @@ void ft_print(t_point **arr_lst, int len_x, int len_y)
         j = 0;
         while (j < len_x)
         {
-            printf("(%i, %i) ", (int)arr_lst[i][j].x, (int)arr_lst[i][j].y);
+            printf("(%i, %i, %i) ", (int)arr_lst[i][j].x, (int)arr_lst[i][j].y, (int)arr_lst[i][j].z);
             j++;
         }
         printf("\n");
@@ -200,7 +200,7 @@ void ft_print(t_point **arr_lst, int len_x, int len_y)
 
 }
 
-void ft_add_coords(t_point **arr_lst, int len_x, int len_y, int event)
+void ft_add_coords(t_point **arr_lst, int len_x, int len_y, int scale)
 {
     int     i;
     int     j;
@@ -208,7 +208,7 @@ void ft_add_coords(t_point **arr_lst, int len_x, int len_y, int event)
     int     len;
 
     len = len_x * len_y;
-    d = 500 / len_y;
+    d = scale / len_y;
     i = 0;
     while (i < len_y)
     {
@@ -217,8 +217,9 @@ void ft_add_coords(t_point **arr_lst, int len_x, int len_y, int event)
         {
             arr_lst[i][j].x = (j == 0) ? 0 - len_x * d / 2 : arr_lst[i][j - 1].x + d;
             arr_lst[i][j].y = (i == 0) ? 0 - len_y * d / 2: arr_lst[i - 1][j].y + d;
-            if (event == 0)
-                arr_lst[i][j].z *= d;
+            arr_lst[i][j].z = arr_lst[i][j].z_init * d;
+
+
 //            arr_lst[i][j].dx = arr_lst[i][j].x + DW / 2;
 //            arr_lst[i][j].dy = arr_lst[i][j].y + DH / 2;
 //            arr_lst[i][j].dz = arr_lst[i][j].z;
@@ -255,7 +256,7 @@ int ft_key_press(int keycode, void *param)
         mlx_clear_window(p->mlx_ptr, p->win_ptr);
         ft_rotate(p->arr_lst, ft_degree_to_rad(0, 0, -1), p->len_x, p->len_y);
         ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
-        ft_print(p->arr_lst, p->len_x, p->len_y);
+       // ft_print(p->arr_lst, p->len_x, p->len_y);
     }
     /* D */
     if (keycode == 2)
@@ -285,7 +286,7 @@ int ft_key_press(int keycode, void *param)
     if (keycode == 12)
     {
         mlx_clear_window(p->mlx_ptr, p->win_ptr);
-        ft_add_coords(p->arr_lst, p->len_x, p->len_y, 1);
+        ft_add_coords(p->arr_lst, p->len_x, p->len_y, p->scale);
         ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
 //        ft_print(p->arr_lst, p->len_x, p->len_y);
     }
@@ -293,9 +294,9 @@ int ft_key_press(int keycode, void *param)
     if (keycode == 18)
     {
         mlx_clear_window(p->mlx_ptr, p->win_ptr);
-        ft_print(p->arr_lst, p->len_x, p->len_y);
-//        ft_add_coords(p->arr_lst, p->len_x, p->len_y, 1);
-        ft_print(p->arr_lst, p->len_x, p->len_y);
+    //    ft_print(p->arr_lst, p->len_x, p->len_y);
+        ft_add_coords(p->arr_lst, p->len_x, p->len_y, p->scale);
+    //    ft_print(p->arr_lst, p->len_x, p->len_y);
         ft_rotate(p->arr_lst, ft_degree_to_rad(0, 0, -45), p->len_x, p->len_y);
         ft_rotate(p->arr_lst, ft_degree_to_rad(60, 0, 0), p->len_x, p->len_y);
 //        ft_moving(p->arr_lst, p->len_x, p->len_y, 500);
@@ -303,6 +304,31 @@ int ft_key_press(int keycode, void *param)
     }
     return (0);
 }
+
+//void ft_scale(t_point **arr_lst, int len_x, int len_y, float scale)
+//{
+//    int     i;
+//    int     j;
+//
+//    i = 0;
+//    while (i < len_y)
+//    {
+//        j = 0;
+//        while (j < len_x)
+//        {
+//                arr_lst[i][j].x *= scale;
+//                arr_lst[i][j].y *= scale;
+//                arr_lst[i][j].z *= scale;
+//
+////            printf("(%i, %i, %i) ", (int)arr_lst[i][j].x, (int)arr_lst[i][j].y, (int)arr_lst[i][j].z);
+//            j++;
+//        }
+//        printf("\n");
+//        i++;
+//    }
+//    printf("\n- - - - - - - - - - - - - - - - - - - - - -\n");
+//
+//}
 
 int mouse_press(int button, int x, int y, void *param)
 {
@@ -319,9 +345,48 @@ int mouse_press(int button, int x, int y, void *param)
         p->press = 1;
 //        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
     }
+    if (button == 5 && p->scale < 1000)
+    {
+        q = (float)x;
+        w = (float)y;
+//        printf("HERE\n");
+        mlx_clear_window(p->mlx_ptr, p->win_ptr);
+        p->scale += 10;
+        ft_add_coords(p->arr_lst,  p->len_x,  p->len_y,  p->scale);
+        ft_rotate(p->arr_lst, ft_degree_to_rad(0, 0, -45), p->len_x, p->len_y);
+//        ft_rotate(p->arr_lst, ft_degree_to_rad(0, 0, -45), p->len_x, p->len_y);
+//        ft_rotate(p->arr_lst, ft_degree_to_rad(0, 0, -45), p->len_x, p->len_y);
+        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
+    }
+    if (button == 4 && p->scale > 100)
+    {
+        q = (float)x;
+        w = (float)y;
+//        printf("HERE\n");
+        mlx_clear_window(p->mlx_ptr, p->win_ptr);
+        p->scale -= 10;
+        ft_add_coords(p->arr_lst,  p->len_x,  p->len_y,  p->scale);
+        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
+    }
     return (0);
 
 }
+
+//int mouse_scroll(int button, int x, int y, void *param)
+//{
+//    t_param *p;
+//    float q;
+//    float w;
+//
+//    p = (t_param*)param;
+//    if (button == 4)
+//    {
+//        q = (float)x;
+//        w = (float)y;
+//        p->scale += 1;
+//    }
+//    return (0);
+//}
 
 int mouse_release(int button, int x, int y, void *param)
 {
@@ -358,28 +423,28 @@ int mouse_move(int x, int y, void *param)
         if (p->init_y > y)
         {
             p->init_y = y;
-            ft_rotate(p->arr_lst, ft_degree_to_rad(1, 0, 0), p->len_x, p->len_y);
+            ft_rotate(p->arr_lst, ft_degree_to_rad(2, 0, 0), p->len_x, p->len_y);
             mlx_clear_window(p->mlx_ptr, p->win_ptr);
             ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
         }
         else if (p->init_y < y)
         {
             p->init_y = y;
-            ft_rotate(p->arr_lst, ft_degree_to_rad(-1, 0, 0), p->len_x, p->len_y);
+            ft_rotate(p->arr_lst, ft_degree_to_rad(-2, 0, 0), p->len_x, p->len_y);
             mlx_clear_window(p->mlx_ptr, p->win_ptr);
             ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
         }
-        if (p->init_x < x)
+        if (p->init_x > x)
         {
             p->init_x = x;
-            ft_rotate(p->arr_lst, ft_degree_to_rad(0, 1, 0), p->len_x, p->len_y);
+            ft_rotate(p->arr_lst, ft_degree_to_rad(0, -2, 0), p->len_x, p->len_y);
             mlx_clear_window(p->mlx_ptr, p->win_ptr);
             ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
         }
-        else if (p->init_x > x)
+        else if (p->init_x < x)
         {
             p->init_x = x;
-            ft_rotate(p->arr_lst, ft_degree_to_rad(0, -1, 0), p->len_x, p->len_y);
+            ft_rotate(p->arr_lst, ft_degree_to_rad(0, 2, 0), p->len_x, p->len_y);
             mlx_clear_window(p->mlx_ptr, p->win_ptr);
             ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
         }
@@ -393,9 +458,9 @@ void    ft_open_window(t_point **arr_lst, int len_x, int len_y)
     void	*mlx_ptr;
     void	*win_ptr;
     t_param p;
-    int d;
+//    int d;
 
-    d = 500 / len_y;
+//    d = 500 / len_y;
     mlx_ptr = mlx_init();
     win_ptr = mlx_new_window(mlx_ptr, 1600, 900, "80s_team");
 //    len_x = 1;
@@ -410,7 +475,8 @@ void    ft_open_window(t_point **arr_lst, int len_x, int len_y)
     p.press = 0;
     p.init_x = 0;
     p.init_y = 0;
-    ft_add_coords(arr_lst, len_x, len_y, 0);
+    p.scale = 500;
+    ft_add_coords(arr_lst, len_x, len_y, p.scale);
     ft_draw_lines(arr_lst, len_x, len_y, mlx_ptr, win_ptr);
 //    printf("d = %i\n", d);
 //    printf("cx = %i, cy = %i\n", len_x * d / 2, len_y * d / 2);

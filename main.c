@@ -68,7 +68,7 @@ void ft_fill_lst(t_point **arr_lst, int j, int i, char **arr_str)
     char	*color_str;
 //    arr_lst[i][j].x = 0;
 //    arr_lst[i][j].y = 0;
-    arr_lst[i][j].z = ft_atoi(arr_str[j]);
+    arr_lst[i][j].z_init = ft_atoi(arr_str[j]);
     if (!(color_str = ft_strchr(arr_str[j], ',')))
         arr_lst[i][j].color = 0;
     else
