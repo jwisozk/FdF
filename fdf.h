@@ -40,9 +40,6 @@ typedef struct 		s_point
     float	        z;
     float           z_init;
 	int				color;
-	int             ax;
-    int             ay;
-    int             az;
 }					t_point;
 
 typedef  struct     s_param
@@ -55,7 +52,10 @@ typedef  struct     s_param
     int             press;
     int             init_x;
     int             init_y;
-    float             scale;
+    float           scale;
+    int             angle_x;
+    int             angle_y;
+    int             angle_z;
 }                   t_param;
 
 void	draw_line(void *mlx_ptr, void *win_ptr, float x1, float y1,
