@@ -23,6 +23,8 @@
 #include "mlx.h"
 #define DW 1600
 #define DH 900
+#define LIMIT_SCALE_UP 2000
+#define LIMIT_SCALE_DOWN 100
 //#define ONE_DEGREE M_PI / 180
 #define COS(x) cos(x * M_PI / 180)
 #define SIN(x) sin(x * M_PI / 180)
@@ -39,6 +41,9 @@ typedef struct 		s_point
     float 	        y;
     float	        z;
     float           z_init;
+    float           x_p;
+    float           y_p;
+    float           z_p;
 	int				color;
 }					t_point;
 
@@ -47,15 +52,21 @@ typedef  struct     s_param
     t_point         **arr_lst;
     int             len_x;
     int             len_y;
-    void	        *mlx_ptr;
-    void	        *win_ptr;
-    int             press;
     int             init_x;
     int             init_y;
-    float           scale;
+    int             init_z;
     int             angle_x;
     int             angle_y;
     int             angle_z;
+    float           move_x;
+    float           move_y;
+    float           move_z;
+    int             press_mouse_l;
+    int             press_mouse_r;
+    void	        *mlx_ptr;
+    void	        *win_ptr;
+    int             is_perspective;
+
 }                   t_param;
 
 void	draw_line(void *mlx_ptr, void *win_ptr, float x1, float y1,

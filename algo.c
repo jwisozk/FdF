@@ -165,7 +165,7 @@ void ft_print(t_point **arr_lst, int len_x, int len_y)
 
 }
 
-void ft_add_coords(t_point **arr_lst, int len_x, int len_y, int scale)
+void ft_add_coords(t_point **arr_lst, int len_x, int len_y)
 {
     int     i;
     int     j;
@@ -173,7 +173,7 @@ void ft_add_coords(t_point **arr_lst, int len_x, int len_y, int scale)
     int     len;
 
     len = len_x * len_y;
-    d = scale / len_y;
+    d = 500 / len_y;
     i = 0;
     while (i < len_y)
     {
@@ -183,6 +183,9 @@ void ft_add_coords(t_point **arr_lst, int len_x, int len_y, int scale)
             arr_lst[i][j].x = (j == 0) ? 0 - len_x * d / 2 : arr_lst[i][j - 1].x + d;
             arr_lst[i][j].y = (i == 0) ? 0 - len_y * d / 2: arr_lst[i - 1][j].y + d;
             arr_lst[i][j].z = arr_lst[i][j].z_init * d;
+            arr_lst[i][j].x_p = 0;
+            arr_lst[i][j].y_p = 0;
+            arr_lst[i][j].z_p = 0;
 
 
 //            arr_lst[i][j].dx = arr_lst[i][j].x + DW / 2;
@@ -216,15 +219,111 @@ void ft_equ_angle(t_param *p, int x, int y, int z)
     p->angle_z = z;
 }
 
-t_angle    *ft_degree_to_rad(int x, int y, int z)
-{
-    t_angle *rad;
 
-    rad = (t_angle*)malloc(sizeof(t_angle));
-    rad->x = x;
-    rad->y = y;
-    rad->z = z;
-    return (rad);
+void ft_scale(t_param *p, float scale)
+{
+    int     i;
+    int     j;
+    float     x;
+    float     y;
+    float     z;
+
+    i = 0;
+    while (i < p->len_y)
+    {
+        j = 0;
+        while (j < p->len_x)
+        {
+            x = p->arr_lst[i][j].x;
+            y = p->arr_lst[i][j].y;
+            z = p->arr_lst[i][j].z;
+            p->arr_lst[i][j].x = x * scale;
+            p->arr_lst[i][j].y = y * scale;
+            p->arr_lst[i][j].z = z * scale;
+            j++;
+        }
+        i++;
+    }
+}
+
+void ft_move(t_param *p)
+{
+    int        i;
+    int        j;
+    float     x;
+    float     y;
+    float     z;
+
+    i = 0;
+    while (i < p->len_y)
+    {
+        j = 0;
+        while (j < p->len_x)
+        {
+            x = p->arr_lst[i][j].x;
+            y = p->arr_lst[i][j].y;
+            z = p->arr_lst[i][j].z;
+//            p->arr_lst[i][j].x = x + p->move_x;
+//            p->arr_lst[i][j].y = y + p->move_y;
+//            p->arr_lst[i][j].z = z + p->move_z;
+            p->arr_lst[i][j].z = p->arr_lst[i][j].z_p;
+            j++;
+        }
+        i++;
+    }
+}
+
+void	ft_perspective(t_param *p, int near)
+{
+    int i;
+    int j;
+    int	x;
+    int y;
+    int z;
+
+    i = 0;
+    while (i < p->len_y)
+    {
+        j = 0;
+        while (j < p->len_x)
+        {
+            x = p->arr_lst[i][j].x;
+            y = p->arr_lst[i][j].y;
+            z = p->arr_lst[i][j].z - 3000;
+            p->arr_lst[i][j].x_p = p->arr_lst[i][j].x;
+            p->arr_lst[i][j].y_p = p->arr_lst[i][j].y;
+            p->arr_lst[i][j].z_p = p->arr_lst[i][j].z;
+            if (z)
+            {
+                p->arr_lst[i][j].x = near * x / z;
+                p->arr_lst[i][j].y = near * y / z;
+                p->arr_lst[i][j].z = near;
+            }
+
+            j++;
+        }
+        i++;
+    }
+}
+
+void	ft_non_perspective(t_param *p)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (i < p->len_y)
+    {
+        j = 0;
+        while (j < p->len_x)
+        {
+            p->arr_lst[i][j].x = p->arr_lst[i][j].x_p;
+            p->arr_lst[i][j].y = p->arr_lst[i][j].y_p;
+            p->arr_lst[i][j].z = p->arr_lst[i][j].z_p;
+            j++;
+        }
+        i++;
+    }
 }
 
 int ft_key_press(int keycode, void *param)
@@ -280,7 +379,7 @@ int ft_key_press(int keycode, void *param)
     if (keycode == 12)
     {
         mlx_clear_window(p->mlx_ptr, p->win_ptr);
-        ft_add_coords(p->arr_lst, p->len_x, p->len_y, p->scale);
+        ft_add_coords(p->arr_lst, p->len_x, p->len_y);
         ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
 //        ft_print(p->arr_lst, p->len_x, p->len_y);
     }
@@ -288,17 +387,35 @@ int ft_key_press(int keycode, void *param)
     if (keycode == 18)
     {
         mlx_clear_window(p->mlx_ptr, p->win_ptr);
-    //    ft_print(p->arr_lst, p->len_x, p->len_y);
-        ft_add_coords(p->arr_lst, p->len_x, p->len_y, p->scale);
-    //    ft_print(p->arr_lst, p->len_x, p->len_y);
+        ft_add_coords(p->arr_lst, p->len_x, p->len_y);
+        ft_add_angle(p, 0, 0, -45);
+        ft_rotate(p);
+        ft_equ_angle(p, 60, 0, 0);
+        ft_rotate(p);
+        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
+    }
+
+    if (keycode == 19)
+    {
+        mlx_clear_window(p->mlx_ptr, p->win_ptr);
+//        ft_add_coords(p->arr_lst, p->len_x, p->len_y);
+        //    ft_print(p->arr_lst, p->len_x, p->len_y);
 //        ft_add_angle(p, 0, 0, -45);
 //        ft_add_angle(p, 0, 0, -45);
 //        ft_rotate(p, 3);
 //        ft_add_angle(p, 0, 0, 45);
 //        ft_rotate(p, 3);
-        ft_equ_angle(p, 60, 0, -45);
-        ft_rotate(p);
+//        ft_equ_angle(p, 60, 0, -45);
+//        ft_rotate(p);
 //        ft_moving(p->arr_lst, p->len_x, p->len_y, 500);
+//        ft_equ_angle(p, 0, 0, 55);
+//        ft_equ_angle(p, 60, 0, 0);
+//        ft_rotate(p);
+//        ft_add_coords(p->arr_lst, p->len_x, p->len_y);
+
+        p->is_perspective = 1;
+        ft_perspective(p, -2000);
+        ft_move(p);
         ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
     }
     return (0);
@@ -307,46 +424,23 @@ int ft_key_press(int keycode, void *param)
 int mouse_press(int button, int x, int y, void *param)
 {
     t_param *p;
-    float q;
-    float w;
+    int     scale;
+
+    x = x + y;
 
     p = (t_param*)param;
+    scale = abs((int)p->arr_lst[0][p->len_x - 1].x - (int)p->arr_lst[0][0].x);
+    mlx_clear_window(p->mlx_ptr, p->win_ptr);
     if (button == 1)
-    {
-        q = (float)x;
-        w = (float)y;
-//        printf("x = %i, y = %i\n", x, y);
-        p->press = 1;
-//        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
-    }
-    if (button == 5 && p->scale < 2000)
-    {
-        q = (float)x;
-        w = (float)y;
-//        printf("HERE\n");
-        mlx_clear_window(p->mlx_ptr, p->win_ptr);
-        p->scale += 50;
-        ft_add_coords(p->arr_lst,  p->len_x,  p->len_y,  p->scale);
-        ft_rotate(p);
-//        ft_add_angle(p, 0, 0, -45);
-//        ft_rotate(p->arr_lst, ft_degree_to_rad(0, 0, -45), p->len_x, p->len_y);
-//        ft_rotate(p->arr_lst, ft_degree_to_rad(0, 0, -45), p->len_x, p->len_y);
-//        ft_rotate(p->arr_lst, ft_degree_to_rad(0, 0, -45), p->len_x, p->len_y);
-        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
-    }
-    if (button == 4 && p->scale > 100)
-    {
-        q = (float)x;
-        w = (float)y;
-//        printf("HERE\n");
-        mlx_clear_window(p->mlx_ptr, p->win_ptr);
-        p->scale -= 50;
-        ft_add_coords(p->arr_lst,  p->len_x,  p->len_y,  p->scale);
-        ft_rotate(p);
-        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
-    }
+        p->press_mouse_l = 1;
+    if (button == 2)
+        p->press_mouse_r = 1;
+    if (button == 5 && scale < LIMIT_SCALE_UP)
+        ft_scale(p, 1.1);
+    if (button == 4 && scale > LIMIT_SCALE_DOWN)
+        ft_scale(p, 0.9);
+    ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
     return (0);
-
 }
 
 //int mouse_scroll(int button, int x, int y, void *param)
@@ -368,20 +462,13 @@ int mouse_press(int button, int x, int y, void *param)
 int mouse_release(int button, int x, int y, void *param)
 {
     t_param *p;
-    float q;
-    float w;
 
+    x = x + y;
     p = (t_param*)param;
-    mlx_clear_window(p->mlx_ptr, p->win_ptr);
     if (button == 1)
-    {
-//        button = 1;
-        q = (float)x;
-        w = (float)y;
-//        printf("x = %i, y = %i\n", x, y);
-        p->press = 0;
-        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
-    }
+        p->press_mouse_l = 0;
+    if (button == 2)
+        p->press_mouse_r = 0;
     return (0);
 }
 
@@ -391,42 +478,67 @@ int mouse_move(int x, int y, void *param)
 
     p = (t_param*)param;
 
-    if (p->press == 1)
+    if (p->press_mouse_l == 1)
     {
         if (p->init_x == 0)
             p->init_x = x;
         if (p->init_y == 0)
             p->init_y = y;
-        if (p->init_y > y)
+        if (p->is_perspective == 1)
+            ft_non_perspective(p);
+        if (p->init_y > y + 10)
         {
             p->init_y = y;
             ft_equ_angle(p, 2, 0, 0);
             ft_rotate(p);
         }
-        else if (p->init_y < y)
+        if (p->init_y < y - 10)
         {
             p->init_y = y;
             ft_equ_angle(p, -2, 0, 0);
             ft_rotate(p);
         }
-        if (p->init_x > x)
+        if (p->init_x > x + 10)
         {
             p->init_x = x;
             ft_equ_angle(p, 0, -2, 0);
             ft_rotate(p);
-
         }
-        else if (p->init_x < x)
+        if (p->init_x < x - 10)
         {
             p->init_x = x;
             ft_equ_angle(p, 0, 2, 0);
             ft_rotate(p);
-
         }
+        if (p->is_perspective == 1)
+            ft_perspective(p, -2000);
         mlx_clear_window(p->mlx_ptr, p->win_ptr);
         ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
     }
-
+    if (p->press_mouse_r == 1)
+    {
+        if (p->move_x == 0)
+        {
+            p->move_x = x;
+            return (0);
+        }
+        else
+            p->move_x = x - p->move_x;
+        if (p->move_y == 0)
+        {
+            p->move_y = y;
+            return (0);
+        }
+        else
+            p->move_y = y - p->move_y;
+       // printf("init_x = %f, init_y = %f, x = %i, y = %i\n", p->move_x, p->move_y, x, y);
+        p->move_x = x - p->move_x;
+        p->move_y = y - p->move_y;
+        printf("move_x = %f, move_y = %f, x = %i, y = %i\n", p->move_x, p->move_y, x, y);
+        ft_move(p);
+        mlx_clear_window(p->mlx_ptr, p->win_ptr);
+        ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
+    }
     return (0);
 }
 
@@ -452,14 +564,19 @@ void    ft_open_window(t_point **arr_lst, int len_x, int len_y)
     p.len_y = len_y;
     p.mlx_ptr = mlx_ptr;
     p.win_ptr = win_ptr;
-    p.press = 0;
+    p.press_mouse_l = 0;
+    p.press_mouse_r = 0;
     p.init_x = 0;
     p.init_y = 0;
-    p.scale = 500;
+    p.init_z = 0;
     p.angle_x = 0;
     p.angle_y = 0;
     p.angle_z = 0;
-    ft_add_coords(arr_lst, len_x, len_y, p.scale);
+    p.move_x = 0;
+    p.move_y = 0;
+    p.move_z = 0;
+    p.is_perspective = 0;
+    ft_add_coords(arr_lst, len_x, len_y);
     ft_draw_lines(arr_lst, len_x, len_y, mlx_ptr, win_ptr);
 //    printf("d = %i\n", d);
 //    printf("cx = %i, cy = %i\n", len_x * d / 2, len_y * d / 2);
