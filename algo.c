@@ -186,14 +186,6 @@ void ft_add_coords(t_point **arr_lst, int len_x, int len_y)
             arr_lst[i][j].x_p = 0;
             arr_lst[i][j].y_p = 0;
             arr_lst[i][j].z_p = 0;
-
-
-//            arr_lst[i][j].dx = arr_lst[i][j].x + DW / 2;
-//            arr_lst[i][j].dy = arr_lst[i][j].y + DH / 2;
-//            arr_lst[i][j].dz = arr_lst[i][j].z;
-//            arr_lst[i][j].ax = 0;
-//            arr_lst[i][j].ay = 0;
-//            arr_lst[i][j].az = 0;
             j++;
         }
         i++;
@@ -203,13 +195,6 @@ void ft_add_coords(t_point **arr_lst, int len_x, int len_y)
 int ft_close_window(void)
 {
     exit(0);
-}
-
-void ft_add_angle(t_param *p, int x, int y, int z)
-{
-    p->angle_x += x;
-    p->angle_y += y;
-    p->angle_z += z;
 }
 
 void ft_equ_angle(t_param *p, int x, int y, int z)
@@ -240,6 +225,26 @@ void ft_scale(t_param *p, float scale)
             p->arr_lst[i][j].x = x * scale;
             p->arr_lst[i][j].y = y * scale;
             p->arr_lst[i][j].z = z * scale;
+            j++;
+        }
+        i++;
+    }
+}
+
+void ft_return_position(t_param *p)
+{
+    int     i;
+    int     j;
+
+    i = 0;
+    while (i < p->len_y)
+    {
+        j = 0;
+        while (j < p->len_x)
+        {
+            p->arr_lst[i][j].x = p->arr_lst[i][j].x_p;
+            p->arr_lst[i][j].y = p->arr_lst[i][j].y_p;
+            p->arr_lst[i][j].z = p->arr_lst[i][j].z_p;
             j++;
         }
         i++;
@@ -289,15 +294,15 @@ void	ft_perspective(t_param *p, int near)
         {
             x = p->arr_lst[i][j].x;
             y = p->arr_lst[i][j].y;
-            z = p->arr_lst[i][j].z - 3000;
+            z = p->arr_lst[i][j].z - 1000;
             p->arr_lst[i][j].x_p = p->arr_lst[i][j].x;
             p->arr_lst[i][j].y_p = p->arr_lst[i][j].y;
             p->arr_lst[i][j].z_p = p->arr_lst[i][j].z;
             if (z)
             {
-                p->arr_lst[i][j].x = near * x / z;
-                p->arr_lst[i][j].y = near * y / z;
-                p->arr_lst[i][j].z = near;
+                p->arr_lst[i][j].x = near * x / z / 2;
+                p->arr_lst[i][j].y = near * y / z / 2;
+                p->arr_lst[i][j].z = near / 2;
             }
 
             j++;
@@ -343,7 +348,7 @@ int ft_key_press(int keycode, void *param)
     if (keycode == 0)
     {
         mlx_clear_window(p->mlx_ptr, p->win_ptr);
-        ft_add_angle(p, 0, 0, -1);
+        ft_equ_angle(p, 0, 0, -1);
         ft_rotate(p);
         ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
        // ft_print(p->arr_lst, p->len_x, p->len_y);
@@ -352,7 +357,7 @@ int ft_key_press(int keycode, void *param)
     if (keycode == 2)
     {
         mlx_clear_window(p->mlx_ptr, p->win_ptr);
-        ft_add_angle(p, 0, 0, 1);
+        ft_equ_angle(p, 0, 0, 1);
         ft_rotate(p);
         ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
 //        ft_print(p->arr_lst, p->len_x, p->len_y);
@@ -361,7 +366,7 @@ int ft_key_press(int keycode, void *param)
     if (keycode == 13)
     {
         mlx_clear_window(p->mlx_ptr, p->win_ptr);
-        ft_add_angle(p, 1, 0, 0);
+        ft_equ_angle(p, 1, 0, 0);
         ft_rotate(p);
         ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
     }
@@ -369,7 +374,7 @@ int ft_key_press(int keycode, void *param)
     if (keycode == 1)
     {
         mlx_clear_window(p->mlx_ptr, p->win_ptr);
-        ft_add_angle(p, -1, 0, 0);
+        ft_equ_angle(p, -1, 0, 0);
         ft_rotate(p);
 //        ft_print(p->arr_lst, p->len_x, p->len_y);
         ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
@@ -388,7 +393,7 @@ int ft_key_press(int keycode, void *param)
     {
         mlx_clear_window(p->mlx_ptr, p->win_ptr);
         ft_add_coords(p->arr_lst, p->len_x, p->len_y);
-        ft_add_angle(p, 0, 0, -45);
+        ft_equ_angle(p, 0, 0, -45);
         ft_rotate(p);
         ft_equ_angle(p, 60, 0, 0);
         ft_rotate(p);
@@ -398,24 +403,17 @@ int ft_key_press(int keycode, void *param)
     if (keycode == 19)
     {
         mlx_clear_window(p->mlx_ptr, p->win_ptr);
-//        ft_add_coords(p->arr_lst, p->len_x, p->len_y);
-        //    ft_print(p->arr_lst, p->len_x, p->len_y);
-//        ft_add_angle(p, 0, 0, -45);
-//        ft_add_angle(p, 0, 0, -45);
-//        ft_rotate(p, 3);
-//        ft_add_angle(p, 0, 0, 45);
-//        ft_rotate(p, 3);
-//        ft_equ_angle(p, 60, 0, -45);
-//        ft_rotate(p);
-//        ft_moving(p->arr_lst, p->len_x, p->len_y, 500);
-//        ft_equ_angle(p, 0, 0, 55);
-//        ft_equ_angle(p, 60, 0, 0);
-//        ft_rotate(p);
-//        ft_add_coords(p->arr_lst, p->len_x, p->len_y);
-
-        p->is_perspective = 1;
-        ft_perspective(p, -2000);
-        ft_move(p);
+        if (p->is_perspective == 0)
+        {
+            ft_perspective(p, -2000);
+            p->is_perspective = 1;
+        }
+        else
+        {
+            p->is_perspective = 0;
+            ft_return_position(p);
+        }
+//        ft_move(p);
         ft_draw_lines(p->arr_lst, p->len_x, p->len_y, p->mlx_ptr, p->win_ptr);
     }
     return (0);
@@ -576,6 +574,7 @@ void    ft_open_window(t_point **arr_lst, int len_x, int len_y)
     p.move_y = 0;
     p.move_z = 0;
     p.is_perspective = 0;
+//    p.is_isometric = 0;
     ft_add_coords(arr_lst, len_x, len_y);
     ft_draw_lines(arr_lst, len_x, len_y, mlx_ptr, win_ptr);
 //    printf("d = %i\n", d);

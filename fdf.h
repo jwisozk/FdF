@@ -66,6 +66,7 @@ typedef  struct     s_param
     void	        *mlx_ptr;
     void	        *win_ptr;
     int             is_perspective;
+//    int             is_isometric;
 
 }                   t_param;
 
