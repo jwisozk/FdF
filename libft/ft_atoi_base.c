@@ -31,7 +31,6 @@ static int	ft_isvalid(char c, int base)
 
 static int	ft_base_definer(char **str)
 {
-	int		base;
 	char	*ptr;
 	
 	ptr = *str;

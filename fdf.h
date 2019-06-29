@@ -28,6 +28,7 @@
 //#define ONE_DEGREE M_PI / 180
 #define COS(x) cos(x * M_PI / 180)
 #define SIN(x) sin(x * M_PI / 180)
+#define DEFAULT_COLOR 16777215
 
 typedef  struct     s_angle
 {
@@ -76,5 +77,7 @@ void    ft_wire_designer(void *mlx_ptr, void *win_ptr,
         t_point **arr_lst, int len_x, int len_y);
 //void    ft_open_new_window(t_point **arr_lst, int len_x, int len_y);
 void    ft_open_window(t_point **arr_lst, int len_x, int len_y);
+void    ft_bresenham_gradient(void *mlx_ptr, void *win_ptr, int x1, int y1, int x2, int y2, unsigned int color1, unsigned int color2);
+void    ft_bresenham(int x1, int y1, int x2, int y2, void *mlx_ptr, void *win_ptr, int color);
 
 #endif

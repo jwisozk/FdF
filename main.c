@@ -66,13 +66,17 @@ static int		ft_print_error(char *str)
 void ft_fill_lst(t_point **arr_lst, int j, int i, char **arr_str)
 {
     char	*color_str;
+    char    *next_char_ptr;
 //    arr_lst[i][j].x = 0;
 //    arr_lst[i][j].y = 0;
     arr_lst[i][j].z_init = ft_atoi(arr_str[j]);
     if (!(color_str = ft_strchr(arr_str[j], ',')))
-        arr_lst[i][j].color = 0;
+        arr_lst[i][j].color = DEFAULT_COLOR;
     else
-        arr_lst[i][j].color = ft_atoi(color_str + 1);
+    {
+        next_char_ptr = color_str + 1;
+        arr_lst[i][j].color = ft_atoi_base(&next_char_ptr);
+    }
 }
 
 t_point **ft_fill_arr_lst(t_point **arr_lst, t_list *lst, int *len_x)

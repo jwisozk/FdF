@@ -19,7 +19,8 @@ LIBMLX = -L /usr/local/lib/ -lmlx -framework OpenGL -framework AppKit
 LIBFT = libft/libft.a
 MAKE_LIBFT = make -C libft
 SOURCE = main.c \
-		 algo.c
+		 algo.c \
+		 bresenham_gradient.c
 OBJ = $(SOURCE:.c=.o)
 
 all: $(NAME)
