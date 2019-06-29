@@ -20,7 +20,8 @@ LIBFT = libft/libft.a
 MAKE_LIBFT = make -C libft
 SOURCE = main.c \
 		 algo.c \
-		 bresenham_gradient.c
+		 bresenham_gradient.c \
+		 fill.c
 OBJ = $(SOURCE:.c=.o)
 
 all: $(NAME)

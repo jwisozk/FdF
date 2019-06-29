@@ -95,6 +95,9 @@ void    ft_draw_lines(t_point **arr_lst, int len_x, int len_y, void *mlx_ptr, vo
         j = 0;
         while (j < len_x)
         {
+          if (i + 1 < len_y && j + 1 < len_x)
+            ft_fill_quadrilateral(mlx_ptr, win_ptr, arr_lst[i][j].x + DW / 2, arr_lst[i][j].y + DH / 2, arr_lst[i][j + 1].x + DW / 2, arr_lst[i][j + 1].y + DH / 2,
+                    arr_lst[i + 1][j].x + DW / 2, arr_lst[i + 1][j].y + DH / 2, arr_lst[i + 1][j + 1].x + DW / 2, arr_lst[i + 1][j + 1].y + DH / 2, 0x0000FF);
 //            printf("(%d, %d, %d)\t(%d, %d, %d)\n", (int)arr_lst[i][j].x, (int)arr_lst[i][j].y, arr_lst[i][j].color, (int)arr_lst[i][j + 1].x, (int)arr_lst[i][j + 1].y, arr_lst[i][j + 1].color);
             if (j + 1 < len_x)
                 ft_bresenham_gradient(mlx_ptr, win_ptr, arr_lst[i][j].x + DW / 2, arr_lst[i][j].y + DH / 2, arr_lst[i][j + 1].x + DW / 2, arr_lst[i][j + 1].y + DH / 2, arr_lst[i][j].color, arr_lst[i][j + 1].color);
@@ -102,7 +105,6 @@ void    ft_draw_lines(t_point **arr_lst, int len_x, int len_y, void *mlx_ptr, vo
             if (i + 1 < len_y)
                 ft_bresenham_gradient(mlx_ptr, win_ptr, arr_lst[i][j].x + DW / 2, arr_lst[i][j].y + DH / 2, arr_lst[i + 1][j].x + DW / 2, arr_lst[i + 1][j].y + DH / 2, arr_lst[i][j].color, arr_lst[i + 1][j].color);
 //                ft_bresenham(arr_lst[i][j].x + DW / 2, arr_lst[i][j].y + DH / 2, arr_lst[i + 1][j].x + DW / 2, arr_lst[i + 1][j].y + DH / 2, mlx_ptr, win_ptr, arr_lst[i][j].color);
-
             j++;
         }
         i++;
