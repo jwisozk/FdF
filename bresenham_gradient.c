@@ -59,9 +59,9 @@ int	gradient_step(unsigned int *color1, unsigned int *color2, int gradient_lengt
         gradient_length = 1;
 //    printf("\tm_delta = %d, gradient_length = %d\n", m_delta, gradient_length);
     shift = gradient_length > m_delta ? gradient_length / m_delta : m_delta / gradient_length;
-    if (!shift)
+    if (shift == 0 || (gradient_length / shift) == 0)
         shift = 1;
-//    printf("gradient_step(): gradient_length = %d, m_delta / gradient_length = %d\n", gradient_length, m_delta / gradient_length);
+//    printf("gradient_length = %d, shift = %d, gradient_length / shift = %d,\n",gradient_length, shift, gradient_length / shift);
 	delta_a = delta_a / (gradient_length / shift);
 	delta_r = delta_r / (gradient_length / shift);
 	delta_g = delta_g / (gradient_length / shift);
