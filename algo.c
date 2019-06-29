@@ -183,9 +183,9 @@ void ft_add_coords(t_point **arr_lst, int len_x, int len_y)
             arr_lst[i][j].x = (j == 0) ? 0 - len_x * d / 2 : arr_lst[i][j - 1].x + d;
             arr_lst[i][j].y = (i == 0) ? 0 - len_y * d / 2: arr_lst[i - 1][j].y + d;
             arr_lst[i][j].z = arr_lst[i][j].z_init * d;
-            arr_lst[i][j].x_p = 0;
-            arr_lst[i][j].y_p = 0;
-            arr_lst[i][j].z_p = 0;
+//            arr_lst[i][j].x_p = 0;
+//            arr_lst[i][j].y_p = 0;
+//            arr_lst[i][j].z_p = 0;
             j++;
         }
         i++;
