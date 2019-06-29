@@ -6,7 +6,7 @@
 /*   By: jwisozk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 16:37:25 by jwisozk           #+#    #+#             */
-/*   Updated: 2019/05/28 21:53:01 by jwisozk          ###   ########.fr       */
+/*   Updated: 2019/06/29 16:47:54 by twill            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,7 @@ void				ft_lstadd_back(t_list **alst, t_list *new);
 void				**ft_free_all(void **ptr, int len);
 void                ft_del(void *s, size_t n);
 int					get_next_line(const int fd, char **line);
+int					ft_isspace(char c);
+int					ft_atoi_base(char **str);
 
 #endif
