@@ -20,7 +20,7 @@
 # include <sys/uio.h>
 # include <fcntl.h>
 # include "libft/libft.h"
-# include "mlx.h"
+# include "/usr/local/include/mlx.h"
 # define H_DIST_BTWN_TWO_POINT 20
 # define V_DIST_BTWN_TWO_POINT 20
 # define DW 1600

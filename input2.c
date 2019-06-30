@@ -51,17 +51,17 @@ int		ft_key_press(int keycode, void *param)
 	p = (t_param*)param;
 	if (keycode == 53)
 		ft_close_window(p);
-	if (keycode == 0)
+	if (keycode == 0 && p->is_perspective == 0)
 		ft_one_key(p, 0, 0, -2);
-	if (keycode == 2)
+	if (keycode == 2 && p->is_perspective == 0)
 		ft_one_key(p, 0, 0, 2);
-	if (keycode == 13)
+	if (keycode == 13 && p->is_perspective == 0)
 		ft_one_key(p, 2, 0, 0);
-	if (keycode == 1)
+	if (keycode == 1 && p->is_perspective == 0)
 		ft_one_key(p, -2, 0, 0);
-	if (keycode == 12)
+	if (keycode == 12 && p->is_perspective == 0)
 		ft_one_key(p, 0, -2, 0);
-	if (keycode == 14)
+	if (keycode == 14 && p->is_perspective == 0)
 		ft_one_key(p, 0, 2, 0);
 	ft_key_numbers(keycode, p);
 	ft_draw_lines(p);
