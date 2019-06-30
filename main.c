@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-int	ft_getlen_x(char **arr)
+static int	ft_getlen_x(char **arr)
 {
     int len;
 
@@ -22,7 +22,7 @@ int	ft_getlen_x(char **arr)
     return (len);
 }
 
-t_list *ft_get_lst_with_len_y(int fd)
+static t_list *ft_get_lst_with_len_y(int fd)
 {
     int     len;
     char 	*line;
@@ -58,7 +58,7 @@ static int		ft_print_error(char *str)
     exit(0);
 }
 
-void ft_fill_lst(t_point **arr_lst, int j, int i, char **arr_str)
+static void ft_fill_lst(t_point **arr_lst, int j, int i, char **arr_str)
 {
     char	*color_str;
     char    *next_char_ptr;
@@ -73,7 +73,7 @@ void ft_fill_lst(t_point **arr_lst, int j, int i, char **arr_str)
     }
 }
 
-t_point **ft_fill_arr_lst(t_point **arr_lst, t_list *lst, int *len_x)
+static t_point **ft_fill_arr_lst(t_point **arr_lst, t_list *lst, int *len_x)
 {
     int     tmp;
     char    **arr_str;
@@ -101,7 +101,7 @@ t_point **ft_fill_arr_lst(t_point **arr_lst, t_list *lst, int *len_x)
     return (arr_lst);
 }
 
-t_point	**ft_create_arr_lst(t_list *lst, t_param *p)
+static t_point	**ft_create_arr_lst(t_list *lst, t_param *p)
 {
     t_point	**arr_lst;
 
@@ -112,7 +112,7 @@ t_point	**ft_create_arr_lst(t_list *lst, t_param *p)
     return (arr_lst);
 }
 
-void ft_init_param(t_param *p, int len_y)
+static void ft_init_param(t_param *p, int len_y)
 {
     p->len_y = len_y;
     p->press_mouse_l = 0;

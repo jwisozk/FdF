@@ -134,15 +134,6 @@ static void ft_add_coords(t_param *p)
     }
 }
 
-static int ft_close_window(void *param)
-{
-    t_param *p;
-
-    p = (t_param*)param;
-    ft_free_all((void**)p->arr_lst, p->len_y);
-    exit(0);
-}
-
 static void ft_equ_angle(t_param *p, int x, int y, int z)
 {
     p->angle_x = x;
@@ -199,7 +190,7 @@ static void	ft_perspective(t_param *p, int near)
     }
 }
 
-void	ft_non_perspective(t_param *p)
+static void	ft_non_perspective(t_param *p)
 {
     int i;
     int j;
@@ -319,7 +310,7 @@ static int ft_key_press(int keycode, void *param)
     return (0);
 }
 
-static int mouse_press(int button, int x, int y, void *param)
+static int ft_mouse_press(int button, int x, int y, void *param)
 {
     t_param *p;
     int     scale;
@@ -340,7 +331,7 @@ static int mouse_press(int button, int x, int y, void *param)
     return (0);
 }
 
-static int mouse_release(int button, int x, int y, void *param)
+static int ft_mouse_release(int button, int x, int y, void *param)
 {
     t_param *p;
 
@@ -353,7 +344,17 @@ static int mouse_release(int button, int x, int y, void *param)
     return (0);
 }
 
-static int mouse_move(int x, int y, void *param)
+static void    ft_mouse_mini(t_param *p, int x, int y)
+{
+    if (y == 0)
+        p->init_x = x;
+    else
+        p->init_y = y;
+    ft_equ_angle(p, x, y, 0);
+    ft_rotate(p);
+}
+
+static int ft_mouse_move(int x, int y, void *param)
 {
     t_param *p;
 
@@ -366,40 +367,29 @@ static int mouse_move(int x, int y, void *param)
             p->init_y = y;
         if (p->is_perspective == 1)
             ft_non_perspective(p);
-
-        if (p->init_x < 0)
-            p->init_x *= -1;
-
         if (p->init_y > y + 10)
-        {
-            p->init_y = y;
-            ft_equ_angle(p, 2, 0, 0);
-            ft_rotate(p);
-        }
+            ft_mouse_mini(p, 2, 0);
         if (p->init_y < y - 10)
-        {
-            p->init_y = y;
-            ft_equ_angle(p, -2, 0, 0);
-            ft_rotate(p);
-        }
+            ft_mouse_mini(p, -2, 0);
         if (p->init_x > x + 10)
-        {
-            p->init_x = x;
-            ft_equ_angle(p, 0, -2, 0);
-            ft_rotate(p);
-        }
+            ft_mouse_mini(p, 0, -2);
         if (p->init_x < x - 10)
-        {
-            p->init_x = x;
-            ft_equ_angle(p, 0, 2, 0);
-            ft_rotate(p);
-        }
+            ft_mouse_mini(p, 0, 2);
         if (p->is_perspective == 1)
             ft_perspective(p, -2000);
         mlx_clear_window(p->mlx_ptr, p->win_ptr);
         ft_draw_lines(p);
     }
     return (0);
+}
+
+static int ft_close_window(void *param)
+{
+    t_param *p;
+
+    p = (t_param*)param;
+    ft_free_all((void**)p->arr_lst, p->len_y);
+    exit(0);
 }
 
 void    ft_open_window(t_param *p)
@@ -415,35 +405,8 @@ void    ft_open_window(t_param *p)
     ft_draw_lines(p);
     mlx_hook(win_ptr, 17, 0, ft_close_window, p);
     mlx_hook(win_ptr, 2, 0, ft_key_press, p);
-    mlx_hook(win_ptr, 4, 0, mouse_press, p);
-    mlx_hook(win_ptr, 5, 0, mouse_release, p);
-    mlx_hook(win_ptr, 6, 0, mouse_move, p);
+    mlx_hook(win_ptr, 4, 0, ft_mouse_press, p);
+    mlx_hook(win_ptr, 5, 0, ft_mouse_release, p);
+    mlx_hook(win_ptr, 6, 0, ft_mouse_move, p);
     mlx_loop(mlx_ptr);
 }
-
-//void ft_move(t_param *p)
-//{
-//    int       i;
-//    int       j;
-//    float     x;
-//    float     y;
-//    float     z;
-//
-//    i = 0;
-//    while (i < p->len_y)
-//    {
-//        j = 0;
-//        while (j < p->len_x)
-//        {
-//            x = p->arr_lst[i][j].x;
-//            y = p->arr_lst[i][j].y;
-//            z = p->arr_lst[i][j].z;
-////            p->arr_lst[i][j].x = x + p->move_x;
-////            p->arr_lst[i][j].y = y + p->move_y;
-////            p->arr_lst[i][j].z = z + p->move_z;
-//            p->arr_lst[i][j].z = p->arr_lst[i][j].z_p;
-//            j++;
-//        }
-//        i++;
-//    }
-//}
