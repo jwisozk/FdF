@@ -88,7 +88,7 @@ typedef  struct     s_param
 	int 			var10;
 	int 			var11;
 	int 			var12;
-	t_point			*point;
+	t_point			*pnt;
 //    int             is_isometric;
 }                   t_param;
 typedef struct 		s_color_params
