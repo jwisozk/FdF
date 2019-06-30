@@ -19,6 +19,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <fcntl.h>
 #include "libft/libft.h"
 #include "mlx.h"
 #define DW 1600
@@ -29,6 +32,7 @@
 #define COS(x) cos(x * M_PI / 180)
 #define SIN(x) sin(x * M_PI / 180)
 #define DEFAULT_COLOR 16777215
+#define DIST 500
 
 typedef  struct     s_angle
 {
@@ -45,6 +49,9 @@ typedef struct 		s_point
     float           x_p;
     float           y_p;
     float           z_p;
+    float           x_move;
+    float           y_move;
+    float           z_move;
 	int				color;
 }					t_point;
 
@@ -67,17 +74,49 @@ typedef  struct     s_param
     void	        *mlx_ptr;
     void	        *win_ptr;
     int             is_perspective;
+    int             is_fillcolor;
+    int 			fillcolor;
+    int 			var1;
+    int 			var2;
+    int 			var3;
+    int 			var4;
+    int 			var5;
+    unsigned int 	var6;
+    unsigned int 	var7;
+	int 			var8;
+	int 			var9;
+	int 			var10;
+	int 			var11;
+	int 			var12;
+	t_point			*point;
 //    int             is_isometric;
 }                   t_param;
-
+typedef struct 		s_color_params
+{
+	unsigned char	a1;
+	unsigned char	r1;
+	unsigned char	g1;
+	unsigned char	b1;
+	unsigned char	a2;
+	unsigned char	r2;
+	unsigned char	g2;
+	unsigned char	b2;
+	int 			delta_a;
+	int 			delta_r;
+	int 			delta_g;
+	int 			delta_b;
+	int 			m_delta;
+	int 			step;
+}					t_color_params;
 void	draw_line(void *mlx_ptr, void *win_ptr, float x1, float y1,
 		float x2, float y2,	int color);
 void    ft_wire_designer(void *mlx_ptr, void *win_ptr,
         t_point **arr_lst, int len_x, int len_y);
 //void    ft_open_new_window(t_point **arr_lst, int len_x, int len_y);
-void    ft_open_window(t_point **arr_lst, int len_x, int len_y);
-void    ft_bresenham_gradient(void *mlx_ptr, void *win_ptr, int x1, int y1, int x2, int y2, unsigned int color1, unsigned int color2);
+void    ft_open_window(t_param *p);
+void    ft_bresenham(t_param *p, int i, int j, int v);
 //void    ft_bresenham(int x1, int y1, int x2, int y2, void *mlx_ptr, void *win_ptr, int color);
-void	ft_fill_quadrilateral(void *mlx_ptr, void *win_ptr, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int color);
+void	ft_fill_quadrilateral(t_param *p, int i, int j);
+void	ft_set_var_to_zero(t_param *p);
 
 #endif

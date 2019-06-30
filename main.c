@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   m.c                                                :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jwisozk <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,12 +11,7 @@
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include "libft/libft.h"
-# include <sys/types.h>
-# include <sys/uio.h>
-# include <fcntl.h>
-# include <stdio.h>
-# define BUFF_SIZE 256
+
 int	ft_getlen_x(char **arr)
 {
     int len;
@@ -60,22 +55,21 @@ static int		ft_print_error(char *str)
 {
     ft_putstr(str);
     ft_putchar('\n');
-    return (0);
+    exit(0);
 }
 
 void ft_fill_lst(t_point **arr_lst, int j, int i, char **arr_str)
 {
     char	*color_str;
     char    *next_char_ptr;
-//    arr_lst[i][j].x = 0;
-//    arr_lst[i][j].y = 0;
+
     arr_lst[i][j].z_init = ft_atoi(arr_str[j]);
-    if (!(color_str = ft_strchr(arr_str[j], ',')))
+    if (!(color_str = ft_strchr(arr_str[j], ',')) || *(color_str + 1) == '\0')
         arr_lst[i][j].color = DEFAULT_COLOR;
     else
     {
-        next_char_ptr = color_str + 1;
-        arr_lst[i][j].color = ft_atoi_base(&next_char_ptr);
+            next_char_ptr = color_str + 1;
+            arr_lst[i][j].color = ft_atoi_base(&next_char_ptr);
     }
 }
 
@@ -97,7 +91,6 @@ t_point **ft_fill_arr_lst(t_point **arr_lst, t_list *lst, int *len_x)
         j = 0;
         while (j < *len_x)
         {
-
             ft_fill_lst(arr_lst, j, i, arr_str);
             j++;
         }
@@ -108,103 +101,56 @@ t_point **ft_fill_arr_lst(t_point **arr_lst, t_list *lst, int *len_x)
     return (arr_lst);
 }
 
-t_point	**ft_create_arr_lst(t_list *lst, int *len_x)
+t_point	**ft_create_arr_lst(t_list *lst, t_param *p)
 {
     t_point	**arr_lst;
 
-    if (!(arr_lst = (t_point**)malloc(sizeof(t_point*) * ((int)lst->content_size + 1))))
+    if (!(arr_lst = (t_point**)malloc(sizeof(t_point*) * (p->len_y + 1))))
         return (NULL);
-    arr_lst[lst->content_size] = NULL;
-    arr_lst = ft_fill_arr_lst(arr_lst, lst, len_x);
+    arr_lst[p->len_y] = NULL;
+    arr_lst = ft_fill_arr_lst(arr_lst, lst, &(p->len_x));
     return (arr_lst);
 }
 
-//void ft_add_coords(t_point **arr_lst, int len_x, int len_y)
-//{
-//    int     i;
-//    int     j;
-//    int     d;
-//    int     len;
-//
-//    len = len_x * len_y;
-//
-////    d = (len_x > len_y) ? DH / len_x : DH / len_y;
-//        d = 500 / len_y;
-////    printf("dx : %f, dy : %f\n", dx , dy);
-//    i = 0;
-//    while (i < len_y)
-//    {
-//        j = 0;
-//        while (j < len_x)
-//        {
-//            arr_lst[i][j].x = (j == 0) ? DW / 2 - len_x * d / 2 : arr_lst[i][j - 1].x + d;
-//            arr_lst[i][j].y = (i == 0) ? DH / 2 - len_y * d / 2 : arr_lst[i - 1][j].y + d;
-//            arr_lst[i][j].z *= d;
-////          printf("(%i, %i) ", arr_lst[i][j].x, arr_lst[i][j].y);
-//          j++;
-//        }
-//        printf("\n");
-//        i++;
-//    }
-//}
+void ft_init_param(t_param *p, int len_y)
+{
+    p->len_y = len_y;
+    p->press_mouse_l = 0;
+    p->is_fillcolor = 0;
+    p->init_x = 0;
+    p->init_y = 0;
+    p->init_z = 0;
+    p->angle_x = 0;
+    p->angle_y = 0;
+    p->angle_z = 0;
+    p->move_x = 0;
+    p->move_y = 0;
+    p->move_z = 0;
+    p->fillcolor = DEFAULT_COLOR;
+    p->is_perspective = 0;
+}
 
 int	main(int argc, char **argv)
 {
     int		fd;
-    int     len_x;
-    int     len_y;
+    t_param p;
     t_list	*lst;
-    t_point	**arr_lst;
 
     if (argc == 2)
     {
         if ((fd = open(argv[1], O_RDONLY)) == -1)
-            return (ft_print_error("error"));
-
-        lst = ft_get_lst_with_len_y(fd);
-        if (!(arr_lst = ft_create_arr_lst(lst, &len_x)))
+            return (ft_print_error("Error: file not found"));
+        if ((lst = ft_get_lst_with_len_y(fd)) == NULL)
+            ft_print_error("Error: file was not read");
+        ft_init_param(&p, (int)lst->content_size);
+        if (!(p.arr_lst = ft_create_arr_lst(lst, &p)))
         {
             ft_lstdel(&lst, ft_del);
-            return (ft_print_error("error"));
+            return (ft_print_error("Error: found wrong line length"));
         }
-        len_y = (int)lst->content_size;
-//        ft_add_coords(arr_lst, len_x, len_y);
-
-
-//        int i;
-//        i = 0;
-//        while (i <= len_x * len_y)
-//        {
-//            if (i % len_x == 0)
-//                printf("\n");
-//            printf("(%i, %i) ", arr->x, arr->y);
-//            i++;
-//            arr++;
-//        }
-        ft_open_window(arr_lst, len_x, len_y);
-//        printf("len_x = %i, len_y = %i\n", len_x, len_y);
-        ///
-//        int j;
-//        int i = 0;
-//        printf("len_y = %i\n", len_y);
-//        while (i < len_y)
-//        {
-//            j = 0;
-//            while (j < len_x)
-//            {
-//                printf("%d ", (int)arr_lst[i][j].z);
-////                printf("x : %d, y : %d\n", (int)arr_lst[i][j].x, (int)arr_lst[i][j].y);
-//                j++;
-//            }
-//            printf("\n");
-//            i++;
-//        }
-
-        ///
-
-
-
+        ft_open_window(&p);
     }
-
-        return (0);
+    else
+        ft_print_error("Usage: ./fdf <filename>");
+    return (0);
 }

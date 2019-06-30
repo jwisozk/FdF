@@ -1,96 +1,112 @@
 #include "fdf.h"
 
-int 	ft_min_value(int value1, int value2, int value3)
+static float	ft_min(float value1, float value2, float value3)
 {
-	int min;
-	
-	if (value1 <= value2)
-	{
-		if (value1 <= value3)
-			min = value1;
-		else
-			min = value3;
-	}
-	else
-	{
-		if (value2 <= value3)
-			min = value2;
-		else
-			min = value3;
-	}
-	return (min);
+    int min;
+
+    if (value1 <= value2)
+    {
+        if (value1 <= value3)
+            min = value1;
+        else
+            min = value3;
+    }
+    else
+    {
+        if (value2 <= value3)
+            min = value2;
+        else
+            min = value3;
+    }
+    return (min);
 }
 
-int 	ft_max_value(int value1, int value2, int value3)
+static float	ft_max(float value1, float value2, float value3)
 {
-	int max;
-	
-	if (value1 >= value2)
-	{
-		if (value1 >= value3)
-			max = value1;
-		else
-			max = value3;
-	}
-	else
-	{
-		if (value2 >= value3)
-			max = value2;
-		else
-			max = value3;
-	}
-	return (max);
+    int max;
+
+    if (value1 >= value2)
+    {
+        if (value1 >= value3)
+            max = value1;
+        else
+            max = value3;
+    }
+    else
+    {
+        if (value2 >= value3)
+            max = value2;
+        else
+            max = value3;
+    }
+    return (max);
 }
 
-int 	ft_same_sign(int first, int second, int third)
+static int		ft_sign(float first, float second, float third)
 {
-	if ((first >= 0 && second >= 0 && third >= 0) ||
-	(first < 0 && second < 0 && third < 0))
-		return (1);
-	return (0);
+    if ((first >= 0.0 && second >= 0.0 && third >= 0.0) ||
+        (first < 0.0 && second < 0.0 && third < 0.0))
+        return (1);
+    return (0);
 }
 
-void	ft_fill_triangle(void *mlx_ptr, void *win_ptr, int x1, int y1, int x2, int y2, int x3, int y3, int color)
+void			ft_set_var_to_zero(t_param *p)
 {
-	int	min_x;
-	int	min_y;
-	int	max_x;
-	int	max_y;
-	
-	min_x = ft_min_value(x1, x2, x3);
-	min_y = ft_min_value(y1, y2, y3);
-	max_x = ft_max_value(x1, x2, x3);
-	max_y = ft_max_value(y1, y2, y3);
-	
-	int x;
-	int y;
-	
-	y = min_y;
-	while (y <= max_y)
-	{
-		x = min_x;
-		while (x <= max_x)
-		{
-			if ((x == x1 && y == y1) || (x == x2 && y == y2) || (x == x3 && y == y3) ||
-			ft_same_sign((x1 - x) * (y2 - y1) - (x2 - x1) * (y1 - y),
-			(x2 - x) * (y3 - y2) - (x3 - x2) * (y2 - y),
-			(x3 - x) * (y1 - y3) - (x1 - x3) * (y3 - y)))
-				mlx_pixel_put(mlx_ptr, win_ptr, x, y, color);
-			x++;
-		}
-		printf("\n");
-		y++;
-	}
+    p->var1 = 0;
+    p->var2 = 0;
+    p->var3 = 0;
+    p->var4 = 0;
+    p->var5 = 0;
+    p->var6 = 0;
+    p->var7 = 0;
+    p->var8 = 0;
+    p->var9 = 0;
+    p->var10 = 0;
 }
 
-void	ft_fill_quadrilateral(void *mlx_ptr, void *win_ptr, int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4, int color)
+static int		ft_whether_point_inside_triangle(t_param *p, t_point *point,
+                                                   int i, int j, int x)
 {
-	ft_fill_triangle(mlx_ptr, win_ptr, x1, y1, x3, y3, x4, y4, color);
-	ft_fill_triangle(mlx_ptr, win_ptr, x1, y1, x2, y2, x4, y4, color);
+    if ((x == p->arr_lst[i][j].x && p->var2 == p->arr_lst[i][j].y) ||
+        (x == point->x && p->var2 == point->y) ||
+        (x == p->arr_lst[i + 1][j + 1].x &&	p->var2 == p->arr_lst[i + 1][j + 1].y)
+        || ft_sign((p->arr_lst[i][j].x - x) * (point->y - p->arr_lst[i][j].y) -
+                   (point->x - p->arr_lst[i][j].x) * (p->arr_lst[i][j].y - p->var2),
+                   (point->x - x) * (p->arr_lst[i + 1][j + 1].y - point->y) -
+                   (p->arr_lst[i + 1][j + 1].x - point->x) * (point->y - p->var2),
+                   (p->arr_lst[i + 1][j + 1].x - x) * (p->arr_lst[i][j].y -
+                                                       p->arr_lst[i + 1][j + 1].y) - (p->arr_lst[i][j].x -
+                                                                                      p->arr_lst[i + 1][j + 1].x) * (p->arr_lst[i + 1][j + 1].y - p->var2)))
+        return (1);
+    return (0);
 }
-//
-//int 	main(void)
-//{
-//	ft_fill_quadrilateral(8, 0, 25, 4, 0, 20, 34, 28, 0x0000FF);
-//	return (0);
-//}
+
+static void		ft_fill_triangle(t_param *p, int i, int j, int v)
+{
+    t_point	*point;
+    int 	x;
+
+    ft_set_var_to_zero(p);
+    point = v ? &(p->arr_lst[i][j + 1]) : &(p->arr_lst[i + 1][j]);
+    p->var1 = ft_min(p->arr_lst[i][j].x, point->x, p->arr_lst[i + 1][j + 1].x);
+    p->var2 = ft_min(p->arr_lst[i][j].y, point->y, p->arr_lst[i + 1][j + 1].y);
+    p->var3 = ft_max(p->arr_lst[i][j].x, point->x, p->arr_lst[i + 1][j + 1].x);
+    p->var4 = ft_max(p->arr_lst[i][j].y, point->y, p->arr_lst[i + 1][j + 1].y);
+    while (p->var2 <= p->var4)
+    {
+        x = p->var1;
+        while (x <= p->var3)
+        {
+            if (ft_whether_point_inside_triangle(p, point, i, j, x))
+                mlx_pixel_put(p->mlx_ptr, p->win_ptr, x, p->var2, p->fillcolor);
+            x++;
+        }
+        (p->var2)++;
+    }
+}
+
+void			ft_fill_quadrilateral(t_param *p, int i, int j)
+{
+    ft_fill_triangle(p, i, j, 0);
+    ft_fill_triangle(p, i, j, 1);
+}

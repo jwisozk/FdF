@@ -1,23 +1,13 @@
 #include "fdf.h"
 
-unsigned int	pack_color(unsigned char a, unsigned char r, unsigned char g, unsigned char b)
+static unsigned int	ft_pack_color(unsigned char a, unsigned char r,
+					unsigned char g, unsigned char b)
 {
-//	printf("result = %d, a = %d, r = %d, g = %d, b = %d\n", (a << 24) + (r << 16) + (g << 8) + b, a, r, g, b);
 	return ((a << 24) + (r << 16) + (g << 8) + b);
 }
 
-void	unpack_color(unsigned int color, unsigned char *a, unsigned char *r, unsigned char *g, unsigned char *b)
-{
-//	printf("unpack_color(): &a = %p, &r = %p, &g = %p, &b = %p\n", a, r, g, b);
-//	printf("unpack_color(): color = %d\n", color);
-	*a = (color >> 24) & 255;
-	*r = (color >> 16) & 255;
-	*g = (color >> 8) & 255;
-	*b = color & 255;
-//	printf("unpack_color(): r = %d\n", *r);
-}
 
-int max_delta(int delta_a, int delta_r, int delta_g, int delta_b)
+static int			max_delta(int delta_a, int delta_r, int delta_g, int delta_b)
 {
 	if (delta_a >= delta_r && delta_a >= delta_g && delta_a >= delta_b)
 		return (delta_a);
@@ -28,141 +18,125 @@ int max_delta(int delta_a, int delta_r, int delta_g, int delta_b)
 	return (delta_b);
 }
 
-int	gradient_step(unsigned int *color1, unsigned int *color2, int gradient_length)
+static void			ft_unpack_color(unsigned int color, t_color_params *c, int flag)
 {
-	unsigned char a1;
-	unsigned char r1;
-	unsigned char g1;
-	unsigned char b1;
-	unsigned char a2;
-	unsigned char r2;
-	unsigned char g2;
-	unsigned char b2;
-	int shift;
-	int m_delta;
-//	printf("gradient_step(): &a1 = %p, &r1 = %p, &g1 = %p, &b1 = %p\n", &a1, &r1, &g1, &b1);
-//	printf("gradient_step(): &a2 = %p, &r2 = %p, &g2 = %p, &b2 = %p\n", &a2, &r2, &g2, &b2);
-//	printf("gradient_step(): color = %d\n", color1);
-	unpack_color(*color1, &a1, &r1, &g1, &b1);
-	unpack_color(*color2, &a2, &r2, &g2, &b2);
-    int delta_a = a2 - a1;
-	int delta_r = r2 - r1;
-//	printf("r2 = %d, r1 = %d, delta_r = %d\n", r2, r1, delta_r);
-	int delta_g = g2 - g1;
-	int delta_b = b2 - b1;
-//    printf("delta_a = %d, delta_r = %d, delta_g = %d, delta_b = %d\n", delta_a, delta_r, delta_g, delta_b);
-    // ADD abs()
-    m_delta = max_delta(abs(delta_a), abs(delta_r), abs(delta_g), abs(delta_b));
-    if (!m_delta)
-        m_delta = 1;
+	if (flag == 1)
+	{
+		c->a1 = (color >> 24) & 255;
+		c->r1 = (color >> 16) & 255;
+		c->g1 = (color >> 8) & 255;
+		c->b1 = color & 255;
+	}
+	if (flag == 2)
+	{
+		c->a2 = (color >> 24) & 255;
+		c->r2 = (color >> 16) & 255;
+		c->g2 = (color >> 8) & 255;
+		c->b2 = color & 255;
+	}
+}
+
+static int			ft_gradient_step(unsigned int *color1, unsigned int *color2,
+					int gradient_length)
+{
+	t_color_params	c;
+	ft_unpack_color(*color1, &c, 1);
+	ft_unpack_color(*color2, &c, 2);
+    c.delta_a = c.a2 - c.a1;
+	c.delta_r = c.r2 - c.r1;
+	c.delta_g = c.g2 - c.g1;
+	c.delta_b = c.b2 - c.b1;
+    c.m_delta = max_delta(abs(c.delta_a), abs(c.delta_r), abs(c.delta_g),
+	abs(c.delta_b));
+    if (!(c.m_delta))
+        c.m_delta = 1;
     if (!gradient_length)
         gradient_length = 1;
-//    printf("\tm_delta = %d, gradient_length = %d\n", m_delta, gradient_length);
-    shift = gradient_length > m_delta ? gradient_length / m_delta : m_delta / gradient_length;
-    if (shift == 0 || (gradient_length / shift) == 0)
-        shift = 1;
-//    printf("gradient_length = %d, shift = %d, gradient_length / shift = %d,\n",gradient_length, shift, gradient_length / shift);
-	delta_a = delta_a / (gradient_length / shift);
-	delta_r = delta_r / (gradient_length / shift);
-	delta_g = delta_g / (gradient_length / shift);
-	delta_b = delta_b / (gradient_length / shift);
-	// ???
-	*color1 = pack_color(a1 + delta_a, r1 + delta_r, g1 + delta_g, b1 + delta_b);
-    return (shift);
+    c.step = gradient_length > c.m_delta ? gradient_length / c.m_delta :
+	c.m_delta / gradient_length;
+    if (!c.step || !(gradient_length / c.step))
+        c.step = 1;
+	c.delta_a = c.delta_a / (gradient_length / c.step);
+	c.delta_r = c.delta_r / (gradient_length / c.step);
+	c.delta_g = c.delta_g / (gradient_length / c.step);
+	c.delta_b = c.delta_b / (gradient_length / c.step);
+	*color1 = ft_pack_color(c.a1 + c.delta_a, c.r1 + c.delta_r, c.g1 +
+	c.delta_g, c.b1 + c.delta_b);
+    return (c.step);
 }
 
-static void ft_bresenham_hor_gradient(int x1, int y1, int x2, int y2, void *mlx_ptr, void *win_ptr, unsigned int color1, unsigned int color2)
+static int			ft_h_or_v(t_param *p, int i, int j, t_point *point)
+{
+	return ((abs((int)point->y - (int)p->arr_lst[i][j].y) <
+	abs((int)point->x - (int)p->arr_lst[i][j].x)) ? 1 : 0);
+}
+
+static void			ft_assign_values(t_param* p, int i, int j, t_point *point)
 {
 	int dx;
 	int dy;
-	int x;
-	int y;
-	int slope;
-	int yi;
-	int shift;
 	
-	dx = x2 - x1;
-	dy = y2 - y1;
-	yi = 1;
-	if (dy < 0)
+	dx = point->x - p->arr_lst[i][j].x;
+	dy = point->y - p->arr_lst[i][j].y;
+	if (p->var10)
 	{
-		yi = -1;
-		dy = -dy;
-	}
-	slope = 2 * dy - dx;
-	x = x1;
-	y = y1;
-    shift = gradient_step(&color1, &color2, x2 - x);
-    while (x < x2)
-	{
-		mlx_pixel_put(mlx_ptr, win_ptr, x, y, color1);
-		if (slope >= 0)
-		{
-			y = y + yi;
-			slope -= 2 * dx;
-		}
-		slope += 2 * dy;
-		shift--;
-		if (!shift)
-			shift = gradient_step(&color1, &color2, x2 - x);
-		x++;
-	}
-	mlx_pixel_put(mlx_ptr, win_ptr, x, y, color1);
-}
-
-static void ft_bresenham_ver_gradient(int x1, int y1, int x2, int y2, void *mlx_ptr, void *win_ptr, unsigned int color1, unsigned int color2)
-{
-	int dx;
-	int dy;
-	int x;
-	int y;
-	int slope;
-	int xi;
-	int shift;
-	
-	dx = x2 - x1;
-	dy = y2 - y1;
-	xi = 1;
-	if (dx < 0)
-	{
-		xi = -1;
-		dx = -dx;
-	}
-	slope = 2 * dx - dy;
-	x = x1;
-	y = y1;
-	shift = gradient_step(&color1, &color2, y2 - y);
-	while (y < y2)
-	{
-		mlx_pixel_put(mlx_ptr, win_ptr, x, y, color1);
-		if (slope >= 0)
-		{
-			x = x + xi;
-			slope -= 2 * dy;
-		}
-		slope += 2 * dx;
-		shift--;
-		if (!shift)
-			shift = gradient_step(&color1, &color2, y2 - y);
-		y++;
-	}
-	mlx_pixel_put(mlx_ptr, win_ptr, x, y, color1);
-}
-
-void ft_bresenham_gradient(void *mlx_ptr, void *win_ptr, int x1, int y1, int x2, int y2, unsigned int color1, unsigned int color2)
-{
-    if (abs(y2 - y1) < abs(x2 - x1))
-	{
-		if (x1 < x2)
-			ft_bresenham_hor_gradient(x1, y1, x2, y2, mlx_ptr, win_ptr, color1, color2);
-		else
-			ft_bresenham_hor_gradient(x2, y2, x1, y1, mlx_ptr, win_ptr, color1, color2);
+		p->var11 = dx >= 0 ? point->x : p->arr_lst[i][j].x;
+		p->var1 = dx >= 0 ? dx : p->arr_lst[i][j].x - point->x;
+		p->var2 = dx >= 0 ? dy : p->arr_lst[i][j].y - point->y;
+		p->var3 = dx >= 0 ? p->arr_lst[i][j].x : point->x;
+		p->var4 = dx >= 0 ? p->arr_lst[i][j].y : point->y;
 	}
 	else
 	{
-		if (y1 < y2)
-			ft_bresenham_ver_gradient(x1, y1, x2, y2, mlx_ptr, win_ptr, color1, color2);
-		else
-			ft_bresenham_ver_gradient(x2, y2, x1, y1, mlx_ptr, win_ptr, color1, color2);
+		p->var11 = dy >= 0 ? point->y : p->arr_lst[i][j].y;
+		p->var1 = dy >= 0 ? dy : p->arr_lst[i][j].y - point->y;
+		p->var2 = dy >= 0 ? dx : p->arr_lst[i][j].x - point->x;
+		p->var3 = dy >= 0 ? p->arr_lst[i][j].y : point->y;
+		p->var4 = dy >= 0 ? p->arr_lst[i][j].x : point->x;
 	}
+	p->var6 = (unsigned int)p->arr_lst[i][j].color;
+	p->var7 = (unsigned int)point->color;
+	p->var9 = 1;
+	p->var9 = p->var2 < 0 ? -1 : p->var9;
+}
+
+//	int var1;		// dx || dy
+//	int var2;		// dy || dx
+//	int var3;		// x || y
+//	int var4;		// y || x
+//	int var5;		// shift (step)
+//	int var6;		// color1
+//	int var7;		// color2
+//	int var8;		// slope
+//	int var9;		// yi || xi
+//	int var10;		// var10 == 1 - hor. line; var == 0 - ver. line
+//	int var11;		// x2 || y2
+//	int	var12;		// var12 = 0 - color1 == color2; var12 = 1 - color1 != color2
+
+void				ft_bresenham(t_param *p, int i, int j, int v)
+{
+	ft_set_var_to_zero(p);
+	p->point = &(p->arr_lst[v ? i + 1 : i][v ? j : j + 1]);
+	p->var10 = ft_h_or_v(p, i, j, p->point);
+	ft_assign_values(p, i, j, p->point);
+	p->var2 = p->var2 < 0 ? -(p->var2) : p->var2;
+	p->var8 = 2 * p->var2 - p->var1;
+	p->var12 = p->arr_lst[i][j].color != p->point->color ? 1 : 0;
+	if (p->var12)
+		p->var5 = ft_gradient_step(&(p->var6), &(p->var7), p->var11 - p->var3);
+	while (p->var3 < p->var11)
+	{
+		mlx_pixel_put(p->mlx_ptr, p->win_ptr, (p->var10 ? p->var3 : p->var4),
+		(p->var10 ? p->var4 : p->var3), p->var6);
+		p->var4 = p->var8 >= 0 ? p->var4 + p->var9 : p->var4;
+		p->var8 = p->var8 >= 0 ? p->var8 - 2 * p->var1 : p->var8;
+		p->var8 = p->var8 + 2 * p->var2;
+		p->var5 = p->var12 ? p->var5 - 1 : p->var5;
+		if (p->var12)
+			p->var5 = p->var5 ? p->var5 : ft_gradient_step(&(p->var6),
+			&(p->var7),	p->var11 - p->var3);
+		(p->var3)++;
+	}
+	mlx_pixel_put(p->mlx_ptr, p->win_ptr, (p->var10 ? p->var3 : p->var4),
+	(p->var10 ? p->var4 : p->var3), p->var6);
 }
