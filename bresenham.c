@@ -68,7 +68,8 @@ static int			ft_gradient_step(unsigned int *color1,
 	c.delta_r = c.delta_r / (gradient_length / c.step);
 	c.delta_g = c.delta_g / (gradient_length / c.step);
 	c.delta_b = c.delta_b / (gradient_length / c.step);
-	*color1 = (a << 24) + (r << 16) + (g << 8) + b;
+	*color1 = ((c.a1 + c.delta_a) << 24) + ((c.r1 + c.delta_r) << 16) +
+	((c.g1 + c.delta_g) << 8) + c.b1;
 	return (c.step);
 }
 
@@ -105,8 +106,8 @@ void				ft_bresenham(t_param *p, int i, int j, int v)
 {
 	ft_set_var_to_zero(p);
 	p->pnt = &(p->arr_lst[v ? i + 1 : i][v ? j : j + 1]);
-	p->var10 = (abs((int)pnt->y - (int)p->arr_lst[i][j].y) <
-	abs((int)pnt->x - (int)p->arr_lst[i][j].x)) ? 1 : 0;
+	p->var10 = (abs((int)(p->pnt->y) - (int)(p->arr_lst[i][j].y)) <
+	abs((int)(p->pnt->x) - (int)(p->arr_lst[i][j].x))) ? 1 : 0;
 	ft_assign_values(p, i, j, p->pnt);
 	p->var2 = p->var2 < 0 ? -(p->var2) : p->var2;
 	p->var8 = 2 * p->var2 - p->var1;

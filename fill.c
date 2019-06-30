@@ -86,7 +86,7 @@ static void		ft_fill_triangle(t_param *p, int i, int j, int v)
 		x = p->var1;
 		while (x <= p->var3)
 		{
-			if (ft_is_pnt_inside_triangle(p, p->pnt, i, j, x))
+			if (ft_is_pnt_inside_triangle(p, i, j, x))
 				mlx_pixel_put(p->mlx_ptr, p->win_ptr, x, p->var2, p->fillcolor);
 			x++;
 		}

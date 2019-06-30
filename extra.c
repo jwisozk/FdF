@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-static int		ft_is_same_sign(float first, float second, float third)
+#include "fdf.h"
+
+int		ft_is_same_sign(float first, float second, float third)
 {
 	if ((first >= 0.0 && second >= 0.0 && third >= 0.0) ||
 		(first < 0.0 && second < 0.0 && third < 0.0))
@@ -18,7 +20,7 @@ static int		ft_is_same_sign(float first, float second, float third)
 	return (0);
 }
 
-void			ft_set_var_to_zero(t_param *p)
+void	ft_set_var_to_zero(t_param *p)
 {
 	p->var1 = 0;
 	p->var2 = 0;
