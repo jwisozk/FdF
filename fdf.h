@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #ifndef FDF_H
+# define FDF_H
 # include <unistd.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -20,7 +21,6 @@
 # include <fcntl.h>
 # include "libft/libft.h"
 # include "mlx.h"
-# define FDF_H
 # define H_DIST_BTWN_TWO_POINT 20
 # define V_DIST_BTWN_TWO_POINT 20
 # define DW 1600
@@ -39,10 +39,10 @@ typedef struct		s_angle
 	int				z;
 }					t_angle;
 
-typedef struct 		s_point
+typedef struct		s_point
 {
 	float			x;
-	float 			y;
+	float			y;
 	float			z;
 	float			z_init;
 	float			x_p;
@@ -108,15 +108,15 @@ typedef struct		s_color_params
 	int				step;
 }					t_color_params;
 
-void		draw_line(void *mlx_ptr, void *win_ptr, float x1, float y1,
-			float x2, float y2,	int color);
-void		ft_wire_designer(void *mlx_ptr, void *win_ptr,
-			t_point **arr_lst, int len_x, int len_y);
-void		ft_open_window(t_param *p);
-void		ft_bresenham(t_param *p, int i, int j, int v);
-void		ft_fill_quadrilateral(t_param *p, int i, int j);
-void		ft_set_var_to_zero(t_param *p);
-int			ft_is_same_sign(float first, float second, float third);
-void		ft_set_var_to_zero(t_param *p);
+void				draw_line(void *mlx_ptr, void *win_ptr, float x1, float y1,
+					float x2, float y2, int color);
+void				ft_wire_designer(void *mlx_ptr, void *win_ptr,
+					t_point **arr_lst, int len_x, int len_y);
+void				ft_open_window(t_param *p);
+void				ft_bresenham(t_param *p, int i, int j, int v);
+void				ft_fill_quadrilateral(t_param *p, int i, int j);
+void				ft_set_var_to_zero(t_param *p);
+int					ft_is_same_sign(float first, float second, float third);
+void				ft_set_var_to_zero(t_param *p);
 
 #endif
