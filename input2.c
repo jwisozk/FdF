@@ -67,5 +67,3 @@ int		ft_key_press(int keycode, void *param)
 	ft_draw_lines(p);
 	return (0);
 }
-
-

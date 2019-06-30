@@ -28,7 +28,6 @@ SOURCE = main.c \
 		 input3.c \
 		 projection.c \
 		 rotate.c
-
 OBJ = $(SOURCE:.c=.o)
 
 all: $(NAME)
