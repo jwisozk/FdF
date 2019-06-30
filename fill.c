@@ -71,12 +71,12 @@ static int		ft_whether_point_inside_triangle(t_param *p, t_point *point,
         (x == point->x && p->var2 == point->y) ||
         (x == p->arr_lst[i + 1][j + 1].x &&	p->var2 == p->arr_lst[i + 1][j + 1].y)
         || ft_sign((p->arr_lst[i][j].x - x) * (point->y - p->arr_lst[i][j].y) -
-                   (point->x - p->arr_lst[i][j].x) * (p->arr_lst[i][j].y - p->var2),
-                   (point->x - x) * (p->arr_lst[i + 1][j + 1].y - point->y) -
-                   (p->arr_lst[i + 1][j + 1].x - point->x) * (point->y - p->var2),
-                   (p->arr_lst[i + 1][j + 1].x - x) * (p->arr_lst[i][j].y -
-                                                       p->arr_lst[i + 1][j + 1].y) - (p->arr_lst[i][j].x -
-                                                                                      p->arr_lst[i + 1][j + 1].x) * (p->arr_lst[i + 1][j + 1].y - p->var2)))
+       (point->x - p->arr_lst[i][j].x) * (p->arr_lst[i][j].y - p->var2),
+       (point->x - x) * (p->arr_lst[i + 1][j + 1].y - point->y) -
+       (p->arr_lst[i + 1][j + 1].x - point->x) * (point->y - p->var2),
+       (p->arr_lst[i + 1][j + 1].x - x) * (p->arr_lst[i][j].y -
+       p->arr_lst[i + 1][j + 1].y) - (p->arr_lst[i][j].x -
+      p->arr_lst[i + 1][j + 1].x) * (p->arr_lst[i + 1][j + 1].y - p->var2)))
         return (1);
     return (0);
 }
