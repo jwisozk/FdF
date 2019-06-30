@@ -135,5 +135,8 @@ void				ft_switch_color(t_param *p);
 void				ft_one_key(t_param *p, int x, int y, int z);
 void				ft_scale(t_param *p, float scale);
 void				ft_draw_lines(t_param *p);
+int					ft_getlen_x(char **arr);
+int					ft_print_error(char *str);
+void				ft_init_param(t_param *p, int len_y);
 
 #endif

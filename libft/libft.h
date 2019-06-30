@@ -87,7 +87,7 @@ t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 char				*ft_strrev(char *str);
 void				ft_lstadd_back(t_list **alst, t_list *new);
 void				**ft_free_all(void **ptr, int len);
-void                ft_del(void *s, size_t n);
+void				ft_del(void *s, size_t n);
 int					get_next_line(const int fd, char **line);
 int					ft_isspace(char c);
 int					ft_atoi_base(char **str);

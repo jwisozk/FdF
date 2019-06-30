@@ -33,3 +33,38 @@ void	ft_set_var_to_zero(t_param *p)
 	p->var9 = 0;
 	p->var10 = 0;
 }
+
+int		ft_print_error(char *str)
+{
+	ft_putstr(str);
+	ft_putchar('\n');
+	exit(0);
+}
+
+int		ft_getlen_x(char **arr)
+{
+	int len;
+
+	len = 0;
+	while (arr[len] != NULL)
+		len++;
+	return (len);
+}
+
+void	ft_init_param(t_param *p, int len_y)
+{
+	p->len_y = len_y;
+	p->press_mouse_l = 0;
+	p->is_fillcolor = 0;
+	p->init_x = 0;
+	p->init_y = 0;
+	p->init_z = 0;
+	p->angle_x = 0;
+	p->angle_y = 0;
+	p->angle_z = 0;
+	p->move_x = 0;
+	p->move_y = 0;
+	p->move_z = 0;
+	p->fillcolor = DEFAULT_COLOR;
+	p->is_perspective = 0;
+}

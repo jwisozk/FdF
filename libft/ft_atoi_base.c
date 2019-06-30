@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: twill <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/29 16:46:10 by twill             #+#    #+#             */
-/*   Updated: 2019/06/29 16:46:14 by twill            ###   ########.fr       */
+/*   Created: 2019/06/30 22:12:27 by twill             #+#    #+#             */
+/*   Updated: 2019/06/30 22:12:31 by twill            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	ft_isvalid(char c, int base)
 {
 	int n;
-	
+
 	if (c >= 48 && c <= 57)
 		n = c - 48;
 	else if (c >= 65 && c <= 70)
@@ -32,7 +32,7 @@ static int	ft_isvalid(char c, int base)
 static int	ft_base_definer(char **str)
 {
 	char	*ptr;
-	
+
 	ptr = *str;
 	if (*ptr > 48 && *ptr <= 57)
 		return (10);
@@ -62,7 +62,7 @@ int			ft_atoi_base(char **str)
 	status = 1;
 	value = 0;
 	ptr = *str;
-	while(ft_isspace(*ptr))
+	while (ft_isspace(*ptr))
 		ptr++;
 	if (*ptr == '-')
 		status = -1;
