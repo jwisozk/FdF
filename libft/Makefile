@@ -83,13 +83,12 @@ DEPS = libft.h
 
 all: $(NAME)
 
-%.o: %.c $(DEPS)
-	gcc -c -o $@ $< -I.
-
 $(NAME): $(OBJ)
-	gcc -c $(FLAGS) $(SRC)
 	ar rc $(NAME) $(OBJ)
 	ranlib $(NAME)
+
+%.o: %.c $(DEPS)
+	gcc -c $(FLAGS) $< -I.
 
 clean:
 	/bin/rm -f $(OBJ)
@@ -98,3 +97,5 @@ fclean: clean
 	/bin/rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: all fclean re clean

@@ -69,7 +69,6 @@ typedef struct		s_param
 	float			move_y;
 	float			move_z;
 	int				press_mouse_l;
-	int				press_mouse_r;
 	void			*mlx_ptr;
 	void			*win_ptr;
 	int				is_perspective;
@@ -118,5 +117,23 @@ void				ft_fill_quadrilateral(t_param *p, int i, int j);
 void				ft_set_var_to_zero(t_param *p);
 int					ft_is_same_sign(float first, float second, float third);
 void				ft_set_var_to_zero(t_param *p);
+int                 ft_close_window(void *param);
+void	            ft_rotate(t_param* p);
+void                ft_equ_angle(t_param *p, int x, int y, int z);
+void                ft_return_position(t_param *p);
+int		            ft_key_press(int keycode, void *param);
+int		            ft_mouse_press(int button, int x, int y, void *param);
+int		            ft_mouse_release(int button, int x, int y, void *param);
+int		            ft_mouse_move(int x, int y, void *param);
+void                ft_add_coords(t_param *p);
+void	            ft_perspective(t_param *p, int near);
+void	            ft_non_perspective(t_param *p);
+void	ft_standart_key(t_param *p);
+void	ft_iso_key(t_param *p);
+void	ft_persp_key(t_param *p);
+void	ft_switch_color(t_param *p);
+void	ft_one_key(t_param *p, int x, int y, int z);
+void    ft_scale(t_param *p, float scale);
+void    ft_draw_lines(t_param *p);
 
 #endif

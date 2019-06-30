@@ -22,7 +22,12 @@ SOURCE = main.c \
 		 algo.c \
 		 bresenham.c \
 		 fill.c \
-		 extra.c
+		 extra.c \
+		 input1.c \
+		 input2.c \
+		 input3.c \
+		 projection.c \
+		 rotate.c
 
 OBJ = $(SOURCE:.c=.o)
 
