@@ -125,7 +125,7 @@ int					ft_key_press(int keycode, void *param);
 int					ft_mouse_press(int button, int x, int y, void *param);
 int					ft_mouse_release(int button, int x, int y, void *param);
 int					ft_mouse_move(int x, int y, void *param);
-voidi				ft_add_coords(t_param *p);
+void				ft_add_coords(t_param *p);
 void				ft_perspective(t_param *p, int near);
 void				ft_non_perspective(t_param *p);
 void				ft_standart_key(t_param *p);

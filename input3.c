@@ -44,10 +44,30 @@ int		ft_mouse_release(int button, int x, int y, void *param)
 
 void	ft_mouse_mini(t_param *p, int x, int y)
 {
-		p->init_x = x;
-		p->init_y = y;
-        ft_equ_angle(p, x, y, 0);
+    if (p->init_y > y + 10)
+    {
+        p->init_y = y;
+        ft_equ_angle(p, 2, 0, 0);
         ft_rotate(p);
+    }
+    if (p->init_y < y - 10)
+    {
+        p->init_y = y;
+        ft_equ_angle(p, -2, 0, 0);
+        ft_rotate(p);
+    }
+    if (p->init_x > x + 10)
+    {
+        p->init_x = x;
+        ft_equ_angle(p, 0, -2, 0);
+        ft_rotate(p);
+    }
+    if (p->init_x < x - 10)
+    {
+        p->init_x = x;
+        ft_equ_angle(p, 0, 2, 0);
+        ft_rotate(p);
+    }
 }
 
 int		ft_mouse_move(int x, int y, void *param)
@@ -63,14 +83,7 @@ int		ft_mouse_move(int x, int y, void *param)
 			p->init_y = y;
 		if (p->is_perspective == 1)
 			ft_non_perspective(p);
-		if (p->init_y > y + 10)
-			ft_mouse_mini(p, 2, 0);
-		if (p->init_y < y - 10)
-			ft_mouse_mini(p, -2, 0);
-		if (p->init_x > x + 10)
-			ft_mouse_mini(p, 0, -2);
-		if (p->init_x < x - 10)
-			ft_mouse_mini(p, 0, 2);
+        ft_mouse_mini(p, x, y);
 		if (p->is_perspective == 1)
 			ft_perspective(p, -2000);
 		mlx_clear_window(p->mlx_ptr, p->win_ptr);
