@@ -69,7 +69,7 @@ static int			ft_gradient_step(unsigned int *color1,
 	c.delta_g = c.delta_g / (gradient_length / c.step);
 	c.delta_b = c.delta_b / (gradient_length / c.step);
 	*color1 = ((c.a1 + c.delta_a) << 24) + ((c.r1 + c.delta_r) << 16) +
-	((c.g1 + c.delta_g) << 8) + c.b1;
+	((c.g1 + c.delta_g) << 8) + (c.b1 + c.delta_b);
 	return (c.step);
 }
 
