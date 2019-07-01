@@ -30,8 +30,7 @@ void	ft_persp_key(t_param *p)
 	mlx_clear_window(p->mlx_ptr, p->win_ptr);
 	if (p->is_perspective == 0)
 	{
-	    printf("z = %i, max_z = %i\n", (int)p->arr_lst[0][0].z, p->max_z * DIST / p->len_y);
-		ft_perspective(p, -2000 + abs(p->max_z * DIST / p->len_y));
+		ft_perspective(p, -2000);
 		p->is_perspective = 1;
 	}
 	else

@@ -26,7 +26,7 @@
 # define DW 1600
 # define DH 900
 # define LIMIT_SCALE_UP 3000
-# define LIMIT_SCALE_DOWN 100
+# define LIMIT_SCALE_DOWN 30
 # define COS(x) cos(x * M_PI / 180)
 # define SIN(x) sin(x * M_PI / 180)
 # define DEFAULT_COLOR 16777215

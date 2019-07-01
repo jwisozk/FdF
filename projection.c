@@ -44,7 +44,7 @@ void	ft_perspective(t_param *p, int near)
 		j = 0;
 		while (j < p->len_x)
 		{
-			z = p->arr_lst[i][j].z - 1000;
+			z = p->arr_lst[i][j].z - 1000 - abs(p->max_z * DIST / p->len_y);
 			p->arr_lst[i][j].x_p = p->arr_lst[i][j].x;
 			p->arr_lst[i][j].y_p = p->arr_lst[i][j].y;
 			p->arr_lst[i][j].z_p = p->arr_lst[i][j].z;
