@@ -12,7 +12,7 @@
 
 #include "fdf.h"
 
-static t_list	*ft_get_lst_with_len_y(int fd)
+static t_list	*ft_get_lst_with_len_y(int fd, t_param *p)
 {
 	int		len;
 	char	*line;
@@ -20,13 +20,11 @@ static t_list	*ft_get_lst_with_len_y(int fd)
 	t_list	*tmp;
 
 	len = 0;
+	lst = NULL;
 	while (get_next_line(fd, &line) > 0)
 	{
-		if (len == 0)
-		{
-			if (!(lst = ft_lstnew(line, ft_strlen(line) + 1)))
+		if (len == 0 && !(lst = ft_lstnew(line, ft_strlen(line) + 1)))
 				return (NULL);
-		}
 		else
 		{
 			if (!(tmp = ft_lstnew(line, ft_strlen(line) + 1)))
@@ -36,8 +34,9 @@ static t_list	*ft_get_lst_with_len_y(int fd)
 			}
 			ft_lstadd_back(&lst, tmp);
 		}
-		lst->content_size = ++len;
+		len++;
 	}
+	p->len_y = len;
 	return (lst);
 }
 
@@ -56,7 +55,7 @@ static void		ft_fill_lst(t_point **arr_lst, int j, int i, char **arr_str)
 	}
 }
 
-static t_point	**ft_fill_arr_lst(t_point **arr_lst, t_list *lst, int *len_x)
+static t_point  **ft_fill_arr_lst(t_point **arr_lst, t_list *lst, int *len_x, t_param *p)
 {
 	int		tmp;
 	char	**arr_str;
@@ -75,6 +74,7 @@ static t_point	**ft_fill_arr_lst(t_point **arr_lst, t_list *lst, int *len_x)
 		while (j < *len_x)
 		{
 			ft_fill_lst(arr_lst, j, i, arr_str);
+			p->max_z = (p->max_z < arr_lst[i][j].z_init) ? arr_lst[i][j].z_init : p->max_z;
 			j++;
 		}
 		tmp = *len_x;
@@ -91,7 +91,7 @@ static t_point	**ft_create_arr_lst(t_list *lst, t_param *p)
 	if (!(arr_lst = (t_point**)malloc(sizeof(t_point*) * (p->len_y + 1))))
 		return (NULL);
 	arr_lst[p->len_y] = NULL;
-	arr_lst = ft_fill_arr_lst(arr_lst, lst, &(p->len_x));
+	arr_lst = ft_fill_arr_lst(arr_lst, lst, &(p->len_x), p);
 	return (arr_lst);
 }
 
@@ -105,9 +105,9 @@ int				main(int argc, char **argv)
 	{
 		if ((fd = open(argv[1], O_RDONLY)) == -1)
 			return (ft_print_error("Error: file not found"));
-		if ((lst = ft_get_lst_with_len_y(fd)) == NULL)
+        ft_init_param(&p);
+		if ((lst = ft_get_lst_with_len_y(fd, &p)) == NULL)
 			ft_print_error("Error: file was not read");
-		ft_init_param(&p, (int)lst->content_size);
 		if (!(p.arr_lst = ft_create_arr_lst(lst, &p)))
 		{
 			ft_lstdel(&lst, ft_del);

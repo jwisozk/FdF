@@ -72,9 +72,9 @@ void	ft_add_coords(t_param *p)
 		j = 0;
 		while (j < p->len_x)
 		{
-			p->arr_lst[i][j].x = (j == 0) ? 0 - p->len_x * d / 2 :
+			p->arr_lst[i][j].x = (j == 0) ? 0 - p->len_x * d / 2 + d / 2 :
 			p->arr_lst[i][j - 1].x + d;
-			p->arr_lst[i][j].y = (i == 0) ? 0 - p->len_y * d / 2 :
+			p->arr_lst[i][j].y = (i == 0) ? 0 - p->len_y * d / 2 + d / 2 :
 			p->arr_lst[i - 1][j].y + d;
 			p->arr_lst[i][j].z = p->arr_lst[i][j].z_init * d;
 			j++;

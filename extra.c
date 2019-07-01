@@ -51,9 +51,9 @@ int		ft_getlen_x(char **arr)
 	return (len);
 }
 
-void	ft_init_param(t_param *p, int len_y)
+void	ft_init_param(t_param *p)
 {
-	p->len_y = len_y;
+    p->max_z = 0;
 	p->press_mouse_l = 0;
 	p->is_fillcolor = 0;
 	p->init_x = 0;

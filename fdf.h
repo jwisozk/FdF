@@ -30,7 +30,7 @@
 # define COS(x) cos(x * M_PI / 180)
 # define SIN(x) sin(x * M_PI / 180)
 # define DEFAULT_COLOR 16777215
-# define DIST 400
+# define DIST 500
 
 typedef struct		s_angle
 {
@@ -57,6 +57,7 @@ typedef struct		s_point
 typedef struct		s_param
 {
 	t_point			**arr_lst;
+	int             max_z;
 	int				len_x;
 	int				len_y;
 	int				init_x;
@@ -137,6 +138,6 @@ void				ft_scale(t_param *p, float scale);
 void				ft_draw_lines(t_param *p);
 int					ft_getlen_x(char **arr);
 int					ft_print_error(char *str);
-void				ft_init_param(t_param *p, int len_y);
+void				ft_init_param(t_param *p);
 
 #endif
