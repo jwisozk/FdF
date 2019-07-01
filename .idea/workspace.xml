@@ -10,10 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7f7e4f2c-5660-4e6e-912f-4aecd2367fde" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fdf.h" beforeDir="false" afterPath="$PROJECT_DIR$/fdf.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/input1.c" beforeDir="false" afterPath="$PROJECT_DIR$/input1.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projection.c" beforeDir="false" afterPath="$PROJECT_DIR$/projection.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/main.c" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -89,11 +86,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="247">
-              <caret line="76" column="90" selection-start-line="76" selection-start-column="90" selection-end-line="76" selection-end-column="90" />
+            <state relative-caret-position="307">
+              <caret line="76" column="27" lean-forward="true" selection-start-line="76" selection-start-column="27" selection-end-line="76" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -107,10 +104,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/extra.c">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
+            <state relative-caret-position="352">
               <caret line="69" column="1" selection-start-line="69" selection-start-column="1" selection-end-line="69" selection-end-column="1" />
             </state>
           </provider>
@@ -148,8 +145,8 @@
       <find>static</find>
       <find>z_init</find>
       <find>z</find>
-      <find>scal</find>
       <find>sca</find>
+      <find>scal</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -167,12 +164,12 @@
         <option value="$PROJECT_DIR$/rotate.c" />
         <option value="$PROJECT_DIR$/maps/1.fdf" />
         <option value="$PROJECT_DIR$/algo.c" />
-        <option value="$PROJECT_DIR$/main.c" />
         <option value="$PROJECT_DIR$/input3.c" />
         <option value="$PROJECT_DIR$/input1.c" />
         <option value="$PROJECT_DIR$/projection.c" />
         <option value="$PROJECT_DIR$/fdf.h" />
         <option value="$PROJECT_DIR$/extra.c" />
+        <option value="$PROJECT_DIR$/main.c" />
       </list>
     </option>
   </component>
@@ -252,12 +249,12 @@
       <workItem from="1561814489812" duration="7710000" />
       <workItem from="1561826481381" duration="4047000" />
       <workItem from="1561886584471" duration="32539000" />
-      <workItem from="1561995660045" duration="11259000" />
+      <workItem from="1561995660045" duration="11527000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="128308000" />
+    <option name="totallyTimeSpent" value="128576000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1600" height="900" extended-state="0" />
@@ -367,13 +364,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.c">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="247">
-          <caret line="76" column="90" selection-start-line="76" selection-start-column="90" selection-end-line="76" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rotate.c">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="219">
@@ -418,8 +408,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/extra.c">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
+        <state relative-caret-position="352">
           <caret line="69" column="1" selection-start-line="69" selection-start-column="1" selection-end-line="69" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="76" column="27" lean-forward="true" selection-start-line="76" selection-start-column="27" selection-end-line="76" selection-end-column="27" />
         </state>
       </provider>
     </entry>

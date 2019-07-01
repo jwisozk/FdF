@@ -55,7 +55,7 @@ static void		ft_fill_lst(t_point **arr_lst, int j, int i, char **arr_str)
 	}
 }
 
-static t_point  **ft_fill_arr_lst(t_point **arr_lst, t_list *lst, int *len_x, t_param *p)
+static t_point  **ft_fill_arr_lst(t_point **a, t_list *lst, t_param *p)
 {
 	int		tmp;
 	char	**arr_str;
@@ -66,22 +66,22 @@ static t_point  **ft_fill_arr_lst(t_point **arr_lst, t_list *lst, int *len_x, t_
 	while (lst != NULL)
 	{
 		arr_str = ft_strsplit(lst->content, ' ');
-		*len_x = ft_getlen_x(arr_str);
-		if ((i > 0 && *len_x != tmp) ||
-			!(arr_lst[i] = (t_point*)malloc(sizeof(t_point) * *len_x)))
-			return ((t_point**)ft_free_all((void**)arr_lst, i));
+        p->len_x = ft_getlen_x(arr_str);
+		if ((i > 0 && p->len_x != tmp) ||
+			!(a[i] = (t_point*)malloc(sizeof(t_point) * p->len_x)))
+			return ((t_point**)ft_free_all((void**)a, i));
 		j = 0;
-		while (j < *len_x)
+		while (j < p->len_x)
 		{
-			ft_fill_lst(arr_lst, j, i, arr_str);
-			p->max_z = (p->max_z < arr_lst[i][j].z_init) ? arr_lst[i][j].z_init : p->max_z;
+			ft_fill_lst(a, j, i, arr_str);
+			p->max_z = (p->max_z < a[i][j].z_init) ? a[i][j].z_init : p->max_z;
 			j++;
 		}
-		tmp = *len_x;
+		tmp = p->len_x;
 		i++;
 		lst = lst->next;
 	}
-	return (arr_lst);
+	return (a);
 }
 
 static t_point	**ft_create_arr_lst(t_list *lst, t_param *p)
@@ -91,7 +91,7 @@ static t_point	**ft_create_arr_lst(t_list *lst, t_param *p)
 	if (!(arr_lst = (t_point**)malloc(sizeof(t_point*) * (p->len_y + 1))))
 		return (NULL);
 	arr_lst[p->len_y] = NULL;
-	arr_lst = ft_fill_arr_lst(arr_lst, lst, &(p->len_x), p);
+	arr_lst = ft_fill_arr_lst(arr_lst, lst, p);
 	return (arr_lst);
 }
 
