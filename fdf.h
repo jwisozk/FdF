@@ -13,7 +13,6 @@
 #ifndef FDF_H
 # define FDF_H
 # include <unistd.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <math.h>
 # include <sys/types.h>
@@ -57,7 +56,7 @@ typedef struct		s_point
 typedef struct		s_param
 {
 	t_point			**arr_lst;
-	int             max_z;
+	int				max_z;
 	int				len_x;
 	int				len_y;
 	int				init_x;

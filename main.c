@@ -24,7 +24,7 @@ static t_list	*ft_get_lst_with_len_y(int fd, t_param *p)
 	while (get_next_line(fd, &line) > 0)
 	{
 		if (len == 0 && !(lst = ft_lstnew(line, ft_strlen(line) + 1)))
-				return (NULL);
+			return (NULL);
 		else
 		{
 			if (!(tmp = ft_lstnew(line, ft_strlen(line) + 1)))
@@ -55,7 +55,7 @@ static void		ft_fill_lst(t_point **arr_lst, int j, int i, char **arr_str)
 	}
 }
 
-static t_point  **ft_fill_arr_lst(t_point **a, t_list *lst, t_param *p)
+static t_point	**ft_fill_arr_lst(t_point **a, t_list *lst, t_param *p)
 {
 	int		tmp;
 	char	**arr_str;
@@ -66,7 +66,7 @@ static t_point  **ft_fill_arr_lst(t_point **a, t_list *lst, t_param *p)
 	while (lst != NULL)
 	{
 		arr_str = ft_strsplit(lst->content, ' ');
-        p->len_x = ft_getlen_x(arr_str);
+		p->len_x = ft_getlen_x(arr_str);
 		if ((i > 0 && p->len_x != tmp) ||
 			!(a[i] = (t_point*)malloc(sizeof(t_point) * p->len_x)))
 			return ((t_point**)ft_free_all((void**)a, i));
@@ -105,7 +105,7 @@ int				main(int argc, char **argv)
 	{
 		if ((fd = open(argv[1], O_RDONLY)) == -1)
 			return (ft_print_error("Error: file not found"));
-        ft_init_param(&p);
+		ft_init_param(&p);
 		if ((lst = ft_get_lst_with_len_y(fd, &p)) == NULL)
 			ft_print_error("Error: file was not read");
 		if (!(p.arr_lst = ft_create_arr_lst(lst, &p)))
