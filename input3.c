@@ -98,5 +98,6 @@ int		ft_close_window(void *param)
 
 	p = (t_param*)param;
 	ft_free_all((void**)p->arr_lst, p->len_y);
+	close(p->fd);
 	exit(0);
 }

@@ -55,6 +55,7 @@ typedef struct		s_point
 
 typedef struct		s_param
 {
+	int				fd;
 	t_point			**arr_lst;
 	int				max_z;
 	int				len_x;
